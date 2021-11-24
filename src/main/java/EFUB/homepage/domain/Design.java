@@ -10,18 +10,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Table(name="Design")
 @Entity
-public class Design {
+public class Design extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="des_id", nullable = false)
     private Long desId;
     @Column(name="user_id", nullable = false)
     private Long userId;
-
-    @Column(name="created_at", nullable = false)
-    private LocalDateTime createdAt;
-    @Column(name="modifiedAt", nullable = false)
-    private LocalDateTime modifiedAt;
 
     @Column(name="motive", nullable = false)
     private String motive;
