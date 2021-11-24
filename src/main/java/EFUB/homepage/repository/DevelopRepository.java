@@ -1,9 +1,9 @@
 package EFUB.homepage.repository;
 
-import EFUB.homepage.domain.Design;
+import EFUB.homepage.domain.Develop;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DevelopRepository extends JpaRepository<Design, Long> {
+public interface DevelopRepository extends JpaRepository<Develop, Long> {
 }
