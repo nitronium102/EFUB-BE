@@ -49,4 +49,16 @@ public class Develop extends BaseTimeEntity {
         this.link = link;
         this.orientation = orientation;
     }
+
+    public void update(String motive, String projectTopic, String applicationField, String language,
+                  int confidenceLang, String exp, String link, Boolean orientation){
+        this.motive = motive;
+        this.projectTopic = projectTopic;
+        this.applicationField = applicationField;
+        this.language = language;
+        this.confidenceLang = confidenceLang;
+        this.exp = exp;
+        this.link = link;
+        this.orientation = orientation;
+    }
 }

@@ -52,4 +52,17 @@ public class Design extends BaseTimeEntity {
         this.interview = interview;
         this.orientation = orientation;
     }
+
+    public void update(String motive, int confidenceDes, int confidenceTool, String projectTopic,
+                  String expDes, String expDev, String link, Boolean interview, Boolean orientation){
+        this.motive = motive;
+        this.confidenceDes = confidenceDes;
+        this.confidenceTool = confidenceTool;
+        this.projectTopic = projectTopic;
+        this.expDes = expDes;
+        this.expDev = expDev;
+        this.link = link;
+        this.interview = interview;
+        this.orientation = orientation;
+    }
 }

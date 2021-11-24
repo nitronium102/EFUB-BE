@@ -1,6 +1,8 @@
 package EFUB.homepage.controller;
 
 import EFUB.homepage.domain.Develop;
+import EFUB.homepage.domain.Interview;
+import EFUB.homepage.domain.Tool;
 import EFUB.homepage.dto.*;
 import EFUB.homepage.service.DesignService;
 import EFUB.homepage.service.DevelopService;
@@ -95,5 +97,57 @@ public class ApplyController {
         return ResponseEntity.ok(200);
     }
 
+    @PostMapping("/update/dev")
+    public ResponseEntity updateDevelop(@RequestBody UpdateDevelopDto updateDevelopDto){
+        developService.update(updateDevelopDto);
+
+        Long userId = updateDevelopDto.getUser_id();
+        List<Tool> toolList = toolService.findByUserId(userId);
+        for(Tool tool: toolList){
+            toolService.delete(tool.getToolId());
+        }
+        List<Interview> interviewList = interviewService.findByUserId(userId);
+        for(Interview interview: interviewList){
+            interviewService.delete(interview.getInterviewId());
+        }
+
+        List<SaveToolDto> newToolList = updateDevelopDto.getTool();
+        for(SaveToolDto newTool: newToolList){
+            toolService.save(ToolDto.builder()
+            .user_id(userId)
+            .tool(newTool.getTool_name())
+            .build());
+        }
+        List<SaveInterviewDto> newInterviewList = updateDevelopDto.getInterview();
+        for(SaveInterviewDto newInterview: newInterviewList){
+            interviewService.save(InterviewDto.builder()
+            .user_id(userId)
+            .date(newInterview.getDate())
+            .build());
+        }
+
+        return ResponseEntity.ok(200);
+    }
+
+    @PostMapping("/update/des")
+    public ResponseEntity updateDesign(@RequestBody UpdateDesignDto updateDesignDto){
+        designService.update(updateDesignDto);
+
+        Long userId = updateDesignDto.getUser_id();
+        List<Tool> toolList = toolService.findByUserId(userId);
+        for(Tool tool: toolList){
+            toolService.delete(tool.getToolId());
+        }
+
+        List<SaveToolDto> newToolList = updateDesignDto.getTool();
+        for(SaveToolDto newTool: newToolList){
+            toolService.save(ToolDto.builder()
+                    .user_id(userId)
+                    .tool(newTool.getTool_name())
+                    .build());
+        }
+
+        return ResponseEntity.ok(200);
+    }
 
 }
