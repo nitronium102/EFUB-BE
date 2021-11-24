@@ -19,9 +19,9 @@ public class Develop extends BaseTimeEntity {
     @Column(name="user_id", nullable = false)
     private Long userId;
 
-    @Column(name="motive", nullable = false)
+    @Column(name="motive", columnDefinition = "TEXT", nullable = false)
     private String motive;
-    @Column(name="project_topic", nullable = false)
+    @Column(name="project_topic", columnDefinition = "TEXT", nullable = false)
     private String projectTopic;
     @Column(name="application_field", nullable = false)
     private String applicationField;
@@ -29,7 +29,7 @@ public class Develop extends BaseTimeEntity {
     private String language;
     @Column(name="confidence_lang", nullable = false)
     private int confidenceLang;
-    @Column(name="exp", nullable = false)
+    @Column(name="exp", columnDefinition = "TEXT", nullable = false)
     private String exp;
     @Column(name="link", nullable = true)
     private String link;

@@ -19,7 +19,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/recruitment/apply")
+@RequestMapping("/api/recruitment/apply")
 public class ApplyController {
     private final DevelopService developService;
     private final DesignService designService;
