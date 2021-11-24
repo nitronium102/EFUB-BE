@@ -19,11 +19,12 @@ public class SaveDevelopDto {
     private String exp;
     private String link;
     private Boolean orientation;
+    private List<SaveInterviewDto> interview;
 
     @Builder
     public SaveDevelopDto(Long user_id, String motive, String project_topic, String application_field,
                           String language, int confidence_lang, List<SaveToolDto> tool,
-                          String exp, String link, Boolean orientation){
+                          String exp, String link, Boolean orientation, List<SaveInterviewDto> interview){
         this.user_id = user_id;
         this.motive = motive;
         this.project_topic = project_topic;
@@ -34,6 +35,7 @@ public class SaveDevelopDto {
         this.exp = exp;
         this.link = link;
         this.orientation = orientation;
+        this.interview = interview;
     }
 
 }

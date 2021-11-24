@@ -1,5 +1,6 @@
 package EFUB.homepage.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -37,6 +38,7 @@ public class Design extends BaseTimeEntity {
     @Column(name="orientation", nullable = false)
     private Boolean orientation;
 
+    @Builder
     public Design(Long userId, String motive, int confidenceDes, int confidenceTool, String projectTopic,
                   String expDes, String expDev, String link, Boolean interview, Boolean orientation){
         this.userId = userId;
