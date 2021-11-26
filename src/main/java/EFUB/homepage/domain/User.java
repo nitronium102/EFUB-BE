@@ -57,6 +57,7 @@ public class User {
     }
 
 
-
-
+	public void saveFinal() {
+        this.saveFinal = true;
+	}
 }

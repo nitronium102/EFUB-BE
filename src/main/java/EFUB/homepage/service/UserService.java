@@ -6,8 +6,9 @@ import EFUB.homepage.dto.UserResponseDto;
 import EFUB.homepage.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -15,6 +16,7 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
 
+    @Transactional
     public UserResponseDto checkAndSaveUser(UserRequestDto userRequestDto) {
         User user = userRepository.findByNameAndPhoneNoAndPassword(
                 userRequestDto.getName(),
@@ -42,11 +44,17 @@ public class UserService {
 
     }
 
-	public boolean isSaveFinal(Long user_id) {
-        Optional<User> user = userRepository.findById(user_id);
+	public boolean isSaveFinal(Long userId) {
+        Optional<User> user = userRepository.findById(userId);
         if (user.isPresent())
             return user.get().getSaveFinal();
         return false;
+	}
+
+	@Transactional
+	public void saveFinal(Long userId) {
+		Optional<User> optionalUser = userRepository.findById(userId);
+		optionalUser.ifPresent(User::saveFinal);
 	}
 
 

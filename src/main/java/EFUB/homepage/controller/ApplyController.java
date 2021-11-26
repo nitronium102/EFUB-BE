@@ -1,5 +1,6 @@
 package EFUB.homepage.controller;
 
+import EFUB.homepage.domain.Design;
 import EFUB.homepage.domain.Develop;
 import EFUB.homepage.domain.Interview;
 import EFUB.homepage.domain.Tool;
@@ -7,10 +8,7 @@ import EFUB.homepage.dto.*;
 import EFUB.homepage.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,11 +23,10 @@ public class ApplyController {
     private final UserService userService;
 
     static final String INVALID_REQUEST = "필수 파라미터 누락";
-    static final String ACCESS_DENIED = "접근 거부";
 
-    //save_final 처리
     @PostMapping("/save/dev")
-    public ResponseEntity saveDevelop(@RequestBody SaveDevelopDto saveDevelopDto){
+    public ResponseEntity saveDevelop(@RequestBody SaveDevelopDto saveDevelopDto,
+                                      @RequestParam(required = false) Boolean saveFinal) {
         DevelopDto developDto = DevelopDto.builder()
                 .user_id(saveDevelopDto.getUser_id())
                 .motive(saveDevelopDto.getMotive())
@@ -64,11 +61,16 @@ public class ApplyController {
         Develop develop = developService.save(developDto);
 
         //null 처리
+
+        if (saveFinal != null && saveFinal)
+            userService.saveFinal(develop.getUserId());
+
         return ResponseEntity.ok(200);
     }
 
     @PostMapping("/save/des")
-    public ResponseEntity saveDesign(@RequestBody SaveDesignDto saveDesignDto){
+    public ResponseEntity saveDesign(@RequestBody SaveDesignDto saveDesignDto,
+                                     @RequestParam(required = false) Boolean saveFinal) {
         DesignDto designDto = DesignDto.builder()
                 .user_id(saveDesignDto.getUser_id())
                 .motive(saveDesignDto.getMotive())
@@ -92,14 +94,18 @@ public class ApplyController {
             toolService.save(toolDto);
         }
 
-        designService.save(designDto);
+        Design design = designService.save(designDto);
         //null 처리
+
+        if (saveFinal != null && saveFinal)
+            userService.saveFinal(design.getUserId());
 
         return ResponseEntity.ok(200);
     }
 
     @PostMapping("/update/dev")
-    public ResponseEntity updateDevelop(@RequestBody UpdateDevelopDto updateDevelopDto){
+    public ResponseEntity updateDevelop(@RequestBody UpdateDevelopDto updateDevelopDto,
+                                        @RequestParam(required = false) Boolean saveFinal) {
         developService.update(updateDevelopDto);
 
         Long userId = updateDevelopDto.getUser_id();
@@ -127,11 +133,15 @@ public class ApplyController {
             .build());
         }
 
+        if (saveFinal != null && saveFinal)
+            userService.saveFinal(userId);
+
         return ResponseEntity.ok(200);
     }
 
     @PostMapping("/update/des")
-    public ResponseEntity updateDesign(@RequestBody UpdateDesignDto updateDesignDto){
+    public ResponseEntity updateDesign(@RequestBody UpdateDesignDto updateDesignDto,
+                                       @RequestParam(required = false) Boolean saveFinal) {
         designService.update(updateDesignDto);
 
         Long userId = updateDesignDto.getUser_id();
@@ -147,6 +157,9 @@ public class ApplyController {
                     .tool(newTool.getTool_name())
                     .build());
         }
+
+        if (saveFinal != null && saveFinal)
+            userService.saveFinal(userId);
 
         return ResponseEntity.ok(200);
 
