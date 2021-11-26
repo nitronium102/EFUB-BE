@@ -16,15 +16,7 @@ public class UserController {
 
     @PostMapping("/recruitment/apply/user")
     public UserResponseDto checkAndSaveUser(@RequestBody UserRequestDto userRequestDto){
-//        Long savedUser = 0L;
-//        savedUser = userService.checkUser(userRequestDto);
-//
-//        if (savedUser == 0) return userService.saveUser(userRequestDto);
-//
-//        else return userService.searchByUserId(savedUser);
         return userService.checkAndSaveUser(userRequestDto);
-
-
     }
 
 

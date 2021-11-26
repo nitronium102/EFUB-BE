@@ -14,6 +14,7 @@ import javax.transaction.Transactional;
 public class UserService {
     private final UserRepository userRepository;
 
+    @Transactional
     public UserResponseDto checkAndSaveUser(UserRequestDto userRequestDto) {
         User user = userRepository.findByNameAndPhoneNoAndPassword(
                 userRequestDto.getName(),
@@ -42,31 +43,4 @@ public class UserService {
     }
 
 
-//
-//    @Transactional
-//    public Long checkUser(UserRequestDto userRequestDto) {
-////        User user = new User(userRequestDto.getName(),
-////                userRequestDto.getStudentId(),
-////                userRequestDto.getDepartment(),
-////                userRequestDto.getPhoneNo(),
-////                userRequestDto.getPassword(),
-////                null,
-////                null,
-////                false,
-////                userRequestDto.getPosition())
-//        if (userRepository.existsByNameAndPhoneNoAndPassword(
-//                userRequestDto.getName(),
-//                userRequestDto.getPhoneNo(),
-//                userRequestDto.getPassword()) == false) return 0L;
-//        else
-//
-//    }
-//
-//    @Transactional
-//    public UserResponseDto saveUser(UserRequestDto userRequestDto) {
-//    }
-//
-//    @Transactional
-//    public UserResponseDto searchByUserId(Long savedUser) {
-//    }
 }
