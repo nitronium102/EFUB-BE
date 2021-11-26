@@ -150,4 +150,10 @@ public class ApplyController {
         return ResponseEntity.ok(200);
     }
 
+    @PostMapping("/get/des")
+    public ResponseEntity<Object> getDesign(final @RequestBody UidDto uidDto) {
+        if (uidDto == null || uidDto.getUser_id() == null)
+            return ResponseEntity.badRequest().body("필수 파라미터가 누락");
+        return ResponseEntity.ok().body(designService.getDesign(uidDto.getUser_id()));
+    }
 }
