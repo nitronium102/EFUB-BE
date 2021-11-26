@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -40,6 +41,13 @@ public class UserService {
 
 
     }
+
+	public boolean isSaveFinal(Long user_id) {
+        Optional<User> user = userRepository.findById(user_id);
+        if (user.isPresent())
+            return user.get().getSaveFinal();
+        return false;
+	}
 
 
 //

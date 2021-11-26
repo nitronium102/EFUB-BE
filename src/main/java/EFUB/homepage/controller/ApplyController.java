@@ -4,10 +4,7 @@ import EFUB.homepage.domain.Develop;
 import EFUB.homepage.domain.Interview;
 import EFUB.homepage.domain.Tool;
 import EFUB.homepage.dto.*;
-import EFUB.homepage.service.DesignService;
-import EFUB.homepage.service.DevelopService;
-import EFUB.homepage.service.InterviewService;
-import EFUB.homepage.service.ToolService;
+import EFUB.homepage.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +22,7 @@ public class ApplyController {
     private final DesignService designService;
     private final ToolService toolService;
     private final InterviewService interviewService;
+    private final UserService userService;
 
     static final String INVALID_REQUEST = "필수 파라미터 누락";
     static final String ACCESS_DENIED = "접근 거부";
@@ -159,8 +157,8 @@ public class ApplyController {
         if (uidDto == null || uidDto.getUser_id() == null)
             return ResponseEntity.badRequest().body(INVALID_REQUEST);
 
-        // TODO: user 관련 코드 구현되면 시작
-        //  <유저 정보에서 save_final=false일 경우 ACCESS_DENIED 처리 구현
+        if (userService.isSaveFinal(uidDto.getUser_id()))
+            return ResponseEntity.notFound().build();
 
         return ResponseEntity.ok().body(designService.getDesign(uidDto.getUser_id()));
     }
@@ -170,8 +168,8 @@ public class ApplyController {
         if (uidDto == null || uidDto.getUser_id() == null)
             return ResponseEntity.badRequest().body(INVALID_REQUEST);
 
-        // TODO: user 관련 코드 구현되면 시작
-        //  <유저 정보에서 save_final=false일 경우 ACCESS_DENIED 처리 구현
+        if (userService.isSaveFinal(uidDto.getUser_id()))
+            return ResponseEntity.notFound().build();
 
         return ResponseEntity.ok().body(developService.getDevelop(uidDto.getUser_id()));
     }
