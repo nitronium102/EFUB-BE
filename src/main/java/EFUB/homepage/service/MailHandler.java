@@ -33,10 +33,10 @@ public class MailHandler {
 		messageHelper.setText(text, useHtml);
 	}
 
-	public void send(){
-		try{
+	public void send() {
+		try {
 			sender.send(message);
-		} catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
