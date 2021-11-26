@@ -26,6 +26,9 @@ public class ApplyController {
     private final ToolService toolService;
     private final InterviewService interviewService;
 
+    static final String INVALID_REQUEST = "필수 파라미터 누락";
+    static final String ACCESS_DENIED = "접근 거부";
+
     //save_final 처리
     @PostMapping("/save/dev")
     public ResponseEntity saveDevelop(@RequestBody SaveDevelopDto saveDevelopDto){
@@ -150,4 +153,25 @@ public class ApplyController {
         return ResponseEntity.ok(200);
     }
 
+    @PostMapping("/get/des")
+    public ResponseEntity<Object> getDesign(final @RequestBody UidDto uidDto) {
+        if (uidDto == null || uidDto.getUser_id() == null)
+            return ResponseEntity.badRequest().body(INVALID_REQUEST);
+
+        // TODO: user 관련 코드 구현되면 시작
+        //  <유저 정보에서 save_final=false일 경우 ACCESS_DENIED 처리 구현
+
+        return ResponseEntity.ok().body(designService.getDesign(uidDto.getUser_id()));
+    }
+
+    @PostMapping("/get/dev")
+    public ResponseEntity<Object> getDevelop(final @RequestBody UidDto uidDto) {
+        if (uidDto == null || uidDto.getUser_id() == null)
+            return ResponseEntity.badRequest().body(INVALID_REQUEST);
+
+        // TODO: user 관련 코드 구현되면 시작
+        //  <유저 정보에서 save_final=false일 경우 ACCESS_DENIED 처리 구현
+
+        return ResponseEntity.ok().body(developService.getDevelop(uidDto.getUser_id()));
+    }
 }

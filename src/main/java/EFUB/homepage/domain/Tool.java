@@ -1,5 +1,6 @@
 package EFUB.homepage.domain;
 
+import EFUB.homepage.dto.ToolResDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,5 +27,13 @@ public class Tool {
     public Tool(Long userId, String tool){
         this.userId = userId;
         this.tool = tool;
+    }
+
+    public ToolResDto toToolResDto() {
+        return ToolResDto.builder()
+            .user_id(this.userId)
+            .tool_id(this.toolId)
+            .tool_name(this.tool)
+            .build();
     }
 }
