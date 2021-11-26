@@ -26,6 +26,8 @@ public class ApplyController {
     private final ToolService toolService;
     private final InterviewService interviewService;
 
+    static final String INVALID_REQUEST = "필수 파라미터 누락";
+
     //save_final 처리
     @PostMapping("/save/dev")
     public ResponseEntity saveDevelop(@RequestBody SaveDevelopDto saveDevelopDto){
@@ -153,7 +155,14 @@ public class ApplyController {
     @PostMapping("/get/des")
     public ResponseEntity<Object> getDesign(final @RequestBody UidDto uidDto) {
         if (uidDto == null || uidDto.getUser_id() == null)
-            return ResponseEntity.badRequest().body("필수 파라미터가 누락");
+            return ResponseEntity.badRequest().body(INVALID_REQUEST);
         return ResponseEntity.ok().body(designService.getDesign(uidDto.getUser_id()));
+    }
+
+    @PostMapping("/get/dev")
+    public ResponseEntity<Object> getDevelop(final @RequestBody UidDto uidDto) {
+        if (uidDto == null || uidDto.getUser_id() == null)
+            return ResponseEntity.badRequest().body(INVALID_REQUEST);
+        return ResponseEntity.ok().body(developService.getDevelop(uidDto.getUser_id()));
     }
 }
