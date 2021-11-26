@@ -1,11 +1,13 @@
 package EFUB.homepage.domain;
 
+import EFUB.homepage.dto.DesignResDto;
+import EFUB.homepage.dto.ToolResDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -64,5 +66,24 @@ public class Design extends BaseTimeEntity {
         this.link = link;
         this.interview = interview;
         this.orientation = orientation;
+    }
+
+    public DesignResDto toDesignResDto(List<ToolResDto> tools) {
+        return DesignResDto.builder()
+            .user_id(this.userId)
+            .des_id(this.desId)
+            .created_at(this.getCreatedAt())
+            .modified_at(this.getModifiedAt())
+            .motive(this.motive)
+            .confidence_des(this.confidenceDes)
+            .tool(tools)
+            .confidence_tool(this.confidenceTool)
+            .project_topic(this.projectTopic)
+            .exp_dev(this.expDev)
+            .exp_des(this.expDes)
+            .link(this.link)
+            .interview(this.interview)
+            .orientation(this.orientation)
+            .build();
     }
 }
