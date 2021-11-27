@@ -6,8 +6,10 @@ import EFUB.homepage.dto.UserResponseDto;
 import EFUB.homepage.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -41,6 +43,19 @@ public class UserService {
 
 
     }
+
+	public boolean isSaveFinal(Long userId) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent())
+            return user.get().getSaveFinal();
+        return false;
+	}
+
+	@Transactional
+	public void saveFinal(Long userId) {
+		Optional<User> optionalUser = userRepository.findById(userId);
+		optionalUser.ifPresent(User::saveFinal);
+	}
 
 
 }
