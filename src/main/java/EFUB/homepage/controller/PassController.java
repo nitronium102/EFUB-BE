@@ -1,8 +1,9 @@
 package EFUB.homepage.controller;
 
 import EFUB.homepage.dto.PassDto;
+import EFUB.homepage.dto.PassResponseDto;
+import EFUB.homepage.service.PassService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,13 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/recruitment/pass")
 public class PassController {
 
+	private final PassService passService;
+
 	@PostMapping("/mid")
-	public ResponseEntity checkMidPass(@RequestBody PassDto passDto){
-		// TODO : User의 pass_mid 값 받아오기
+	public PassResponseDto checkMidPass(@RequestBody PassDto passDto) {
+		return passService.checkMidPass(passDto);
 	}
 
 	@PostMapping("/final")
-	public ResponseEntity checkFinPass(@RequestBody PassDto passDto){
-		// TODO : User의 pass_final 값 받아오기
+	public PassResponseDto checkFinPass(@RequestBody PassDto passDto) {
+		return passService.checkFinPass(passDto);
 	}
 }
