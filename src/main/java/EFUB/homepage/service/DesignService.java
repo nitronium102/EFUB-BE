@@ -28,9 +28,13 @@ public class DesignService {
     }
 
     @Transactional
-    public void update(UpdateDesignDto updateDesignDto){
+    public boolean update(UpdateDesignDto updateDesignDto){
         Long desId = updateDesignDto.getDes_id();
-        Design design = designRepository.findById(desId).get();
+        Optional<Design> designOp = designRepository.findById(desId);
+        if(designOp.isEmpty()){
+            return false;
+        }
+        Design design = designOp.get();
         design.update(updateDesignDto.getMotive(),
                 updateDesignDto.getConfidence_des(),
                 updateDesignDto.getConfidence_tool(),
@@ -40,7 +44,7 @@ public class DesignService {
                 updateDesignDto.getLink(),
                 updateDesignDto.getInterview(),
                 updateDesignDto.getOrientation());
-
+        return true;
     }
 
     @Transactional(readOnly = true)

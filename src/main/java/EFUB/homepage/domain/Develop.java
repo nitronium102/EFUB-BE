@@ -23,21 +23,21 @@ public class Develop extends BaseTimeEntity {
     @Column(name="user_id", nullable = false)
     private Long userId;
 
-    @Column(name="motive", columnDefinition = "TEXT", nullable = false)
+    @Column(name="motive", length=350)
     private String motive;
-    @Column(name="project_topic", columnDefinition = "TEXT", nullable = false)
+    @Column(name="project_topic")
     private String projectTopic;
-    @Column(name="application_field", nullable = false)
+    @Column(name="application_field")
     private String applicationField;
-    @Column(name="language", nullable = false)
+    @Column(name="language")
     private String language;
-    @Column(name="confidence_lang", nullable = false)
+    @Column(name="confidence_lang")
     private int confidenceLang;
-    @Column(name="exp", columnDefinition = "TEXT", nullable = false)
+    @Column(name="exp", length=1000)
     private String exp;
-    @Column(name="link", nullable = true)
+    @Column(name="link")
     private String link;
-    @Column(name="orientation", nullable = false)
+    @Column(name="orientation")
     private Boolean orientation;
 
     @Builder
