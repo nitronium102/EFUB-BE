@@ -8,6 +8,7 @@ import EFUB.homepage.dto.*;
 import EFUB.homepage.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,10 +24,19 @@ public class ApplyController {
     private final UserService userService;
 
     static final String INVALID_REQUEST = "필수 파라미터 누락";
+    static final String SAVE_ERROR = "기존 정보가 존재함";
+    static final String UPDATE_ERROR = "기존 정보가 존재하지 않음";
 
     @PostMapping("/save/dev")
     public ResponseEntity saveDevelop(@RequestBody SaveDevelopDto saveDevelopDto,
                                       @RequestParam(required = false) Boolean saveFinal) {
+        if(ObjectUtils.isEmpty(saveDevelopDto.getUser_id())){
+            return ResponseEntity.badRequest().body(INVALID_REQUEST);
+        }
+        if(developService.checkByUserId(saveDevelopDto.getUser_id())){
+            return ResponseEntity.internalServerError().body(SAVE_ERROR);
+        }
+
         DevelopDto developDto = DevelopDto.builder()
                 .user_id(saveDevelopDto.getUser_id())
                 .motive(saveDevelopDto.getMotive())
@@ -41,26 +51,28 @@ public class ApplyController {
 
         Long userId = saveDevelopDto.getUser_id();
         List<SaveToolDto> toolList = saveDevelopDto.getTool();
-        for(SaveToolDto tool: toolList){
-            ToolDto toolDto = ToolDto.builder()
-                    .user_id(userId)
-                    .tool(tool.getTool_name())
-                    .build();
-            toolService.save(toolDto);
+        if(!ObjectUtils.isEmpty(toolList)){
+            for(SaveToolDto tool: toolList){
+                ToolDto toolDto = ToolDto.builder()
+                        .user_id(userId)
+                        .tool(tool.getTool_name())
+                        .build();
+                toolService.save(toolDto);
+            }
         }
 
         List<SaveInterviewDto> interviewList = saveDevelopDto.getInterview();
-        for(SaveInterviewDto interview: interviewList){
-            InterviewDto interviewDto = InterviewDto.builder()
-                    .user_id(userId)
-                    .date(interview.getDate())
-                    .build();
-            interviewService.save(interviewDto);
+        if(!ObjectUtils.isEmpty(interviewList)){
+            for(SaveInterviewDto interview: interviewList){
+                InterviewDto interviewDto = InterviewDto.builder()
+                        .user_id(userId)
+                        .date(interview.getDate())
+                        .build();
+                interviewService.save(interviewDto);
+            }
         }
 
         Develop develop = developService.save(developDto);
-
-        //null 처리
 
         if (saveFinal != null && saveFinal)
             userService.saveFinal(develop.getUserId());
@@ -71,6 +83,13 @@ public class ApplyController {
     @PostMapping("/save/des")
     public ResponseEntity saveDesign(@RequestBody SaveDesignDto saveDesignDto,
                                      @RequestParam(required = false) Boolean saveFinal) {
+        if(ObjectUtils.isEmpty(saveDesignDto.getUser_id())){
+            return ResponseEntity.badRequest().body(INVALID_REQUEST);
+        }
+        if(designService.checkByUserId(saveDesignDto.getUser_id())){
+            return ResponseEntity.internalServerError().body(SAVE_ERROR);
+        }
+
         DesignDto designDto = DesignDto.builder()
                 .user_id(saveDesignDto.getUser_id())
                 .motive(saveDesignDto.getMotive())
@@ -86,16 +105,17 @@ public class ApplyController {
 
         Long userId = saveDesignDto.getUser_id();
         List<SaveToolDto> toolList = saveDesignDto.getTool();
-        for(SaveToolDto tool: toolList){
-            ToolDto toolDto = ToolDto.builder()
-                    .user_id(userId)
-                    .tool(tool.getTool_name())
-                    .build();
-            toolService.save(toolDto);
+        if(!ObjectUtils.isEmpty(toolList)){
+            for(SaveToolDto tool: toolList){
+                ToolDto toolDto = ToolDto.builder()
+                        .user_id(userId)
+                        .tool(tool.getTool_name())
+                        .build();
+                toolService.save(toolDto);
+            }
         }
 
         Design design = designService.save(designDto);
-        //null 처리
 
         if (saveFinal != null && saveFinal)
             userService.saveFinal(design.getUserId());
@@ -106,31 +126,47 @@ public class ApplyController {
     @PostMapping("/update/dev")
     public ResponseEntity updateDevelop(@RequestBody UpdateDevelopDto updateDevelopDto,
                                         @RequestParam(required = false) Boolean saveFinal) {
-        developService.update(updateDevelopDto);
+        if(ObjectUtils.isEmpty(updateDevelopDto.getUser_id())){
+            return ResponseEntity.badRequest().body(INVALID_REQUEST);
+        }
+
+        boolean isUpdate = developService.update(updateDevelopDto);
+        if(!isUpdate){
+            return ResponseEntity.internalServerError().body(UPDATE_ERROR);
+        }
 
         Long userId = updateDevelopDto.getUser_id();
         List<Tool> toolList = toolService.findByUserId(userId);
-        for(Tool tool: toolList){
-            toolService.delete(tool.getToolId());
+        if(!ObjectUtils.isEmpty(toolList)){
+            for(Tool tool: toolList){
+                toolService.delete(tool.getToolId());
+            }
         }
         List<Interview> interviewList = interviewService.findByUserId(userId);
-        for(Interview interview: interviewList){
-            interviewService.delete(interview.getInterviewId());
+        if(!ObjectUtils.isEmpty(interviewList)){
+            for(Interview interview: interviewList){
+                interviewService.delete(interview.getInterviewId());
+            }
         }
 
         List<SaveToolDto> newToolList = updateDevelopDto.getTool();
-        for(SaveToolDto newTool: newToolList){
-            toolService.save(ToolDto.builder()
-            .user_id(userId)
-            .tool(newTool.getTool_name())
-            .build());
+        if(!ObjectUtils.isEmpty(newToolList)){
+            for(SaveToolDto newTool: newToolList){
+                toolService.save(ToolDto.builder()
+                        .user_id(userId)
+                        .tool(newTool.getTool_name())
+                        .build());
+            }
         }
         List<SaveInterviewDto> newInterviewList = updateDevelopDto.getInterview();
-        for(SaveInterviewDto newInterview: newInterviewList){
-            interviewService.save(InterviewDto.builder()
-            .user_id(userId)
-            .date(newInterview.getDate())
-            .build());
+        if(!ObjectUtils.isEmpty(newInterviewList)){
+            for(SaveInterviewDto newInterview: newInterviewList){
+                interviewService.save(InterviewDto.builder()
+                        .user_id(userId)
+                        .date(newInterview.getDate())
+                        .build());
+            }
+
         }
 
         if (saveFinal != null && saveFinal)
@@ -142,27 +178,35 @@ public class ApplyController {
     @PostMapping("/update/des")
     public ResponseEntity updateDesign(@RequestBody UpdateDesignDto updateDesignDto,
                                        @RequestParam(required = false) Boolean saveFinal) {
-        designService.update(updateDesignDto);
+        if(ObjectUtils.isEmpty(updateDesignDto.getUser_id())){
+            return ResponseEntity.badRequest().body(INVALID_REQUEST);
+        }
+        boolean isUpdate = designService.update(updateDesignDto);
+        if(!isUpdate){
+            return ResponseEntity.internalServerError().body(UPDATE_ERROR);
+        }
 
         Long userId = updateDesignDto.getUser_id();
         List<Tool> toolList = toolService.findByUserId(userId);
-        for(Tool tool: toolList){
-            toolService.delete(tool.getToolId());
+        if(!ObjectUtils.isEmpty(toolList)){
+            for(Tool tool: toolList){
+                toolService.delete(tool.getToolId());
+            }
         }
-
         List<SaveToolDto> newToolList = updateDesignDto.getTool();
-        for(SaveToolDto newTool: newToolList){
-            toolService.save(ToolDto.builder()
-                    .user_id(userId)
-                    .tool(newTool.getTool_name())
-                    .build());
+        if(!ObjectUtils.isEmpty(newToolList)){
+            for(SaveToolDto newTool: newToolList){
+                toolService.save(ToolDto.builder()
+                        .user_id(userId)
+                        .tool(newTool.getTool_name())
+                        .build());
+            }
         }
 
         if (saveFinal != null && saveFinal)
             userService.saveFinal(userId);
 
         return ResponseEntity.ok(200);
-
     }
 
     @PostMapping("/get/des")

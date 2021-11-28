@@ -21,23 +21,23 @@ public class Design extends BaseTimeEntity {
     @Column(name="user_id", nullable = false)
     private Long userId;
 
-    @Column(name="motive", columnDefinition = "TEXT", nullable = false)
+    @Column(name="motive", length=350)
     private String motive;
-    @Column(name="confidence_des", nullable = false)
+    @Column(name="confidence_des")
     private int confidenceDes;
-    @Column(name="confidence_tool", nullable = false)
+    @Column(name="confidence_tool")
     private int confidenceTool;
-    @Column(name="project_topic", columnDefinition = "TEXT", nullable = false)
+    @Column(name="project_topic")
     private String projectTopic;
-    @Column(name="exp_dev", columnDefinition = "TEXT")
+    @Column(name="exp_dev", length=5000)
     private String expDev;
-    @Column(name="exp_des", columnDefinition = "TEXT")
+    @Column(name="exp_des", length=5000)
     private String expDes;
     @Column(name="link")
     private String link;
-    @Column(name="interview", nullable = false)
+    @Column(name="interview")
     private Boolean interview;
-    @Column(name="orientation", nullable = false)
+    @Column(name="orientation")
     private Boolean orientation;
 
     @Builder

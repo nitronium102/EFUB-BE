@@ -23,14 +23,26 @@ public class DevelopService {
     private final InterviewRepository interviewRepository;
 
     @Transactional
+    public boolean checkByUserId(Long userId){
+        if(developRepository.findByUserId(userId).isEmpty()){
+            return false;
+        }
+        return true;
+    }
+
+    @Transactional
     public Develop save(DevelopDto developDto){
         return developRepository.save(developDto.toEntity());
     }
 
     @Transactional
-    public void update(UpdateDevelopDto updateDevelopDto) {
+    public boolean update(UpdateDevelopDto updateDevelopDto) {
         Long devId = updateDevelopDto.getDev_id();
-        Develop develop = developRepository.findById(devId).get();
+        Optional<Develop> developOp = developRepository.findById(devId);
+        if(developOp.isEmpty()){
+            return false;
+        }
+        Develop develop = developOp.get();
         develop.update(updateDevelopDto.getMotive(),
                 updateDevelopDto.getProject_topic(),
                 updateDevelopDto.getApplication_field(),
@@ -39,6 +51,7 @@ public class DevelopService {
                 updateDevelopDto.getExp(),
                 updateDevelopDto.getLink(),
                 updateDevelopDto.getOrientation());
+        return true;
     }
 
     @Transactional(readOnly = true)
