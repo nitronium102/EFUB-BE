@@ -23,6 +23,14 @@ public class DesignService {
     private final ToolRepository toolRepository;
 
     @Transactional
+    public boolean checkByUserId(Long userId){
+        if(designRepository.findByUserId(userId).isEmpty()){
+            return false;
+        }
+        return true;
+    }
+
+    @Transactional
     public Design save(DesignDto designDto){
         return designRepository.save(designDto.toEntity());
     }

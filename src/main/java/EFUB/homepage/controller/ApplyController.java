@@ -9,7 +9,6 @@ import EFUB.homepage.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +24,7 @@ public class ApplyController {
     private final UserService userService;
 
     static final String INVALID_REQUEST = "필수 파라미터 누락";
+    static final String SAVE_ERROR = "기존 정보가 존재함";
     static final String UPDATE_ERROR = "기존 정보가 존재하지 않음";
 
     @PostMapping("/save/dev")
@@ -32,6 +32,9 @@ public class ApplyController {
                                       @RequestParam(required = false) Boolean saveFinal) {
         if(ObjectUtils.isEmpty(saveDevelopDto.getUser_id())){
             return ResponseEntity.badRequest().body(INVALID_REQUEST);
+        }
+        if(developService.checkByUserId(saveDevelopDto.getUser_id())){
+            return ResponseEntity.internalServerError().body(SAVE_ERROR);
         }
 
         DevelopDto developDto = DevelopDto.builder()
@@ -82,6 +85,9 @@ public class ApplyController {
                                      @RequestParam(required = false) Boolean saveFinal) {
         if(ObjectUtils.isEmpty(saveDesignDto.getUser_id())){
             return ResponseEntity.badRequest().body(INVALID_REQUEST);
+        }
+        if(designService.checkByUserId(saveDesignDto.getUser_id())){
+            return ResponseEntity.internalServerError().body(SAVE_ERROR);
         }
 
         DesignDto designDto = DesignDto.builder()

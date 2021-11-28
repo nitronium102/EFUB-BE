@@ -23,6 +23,14 @@ public class DevelopService {
     private final InterviewRepository interviewRepository;
 
     @Transactional
+    public boolean checkByUserId(Long userId){
+        if(developRepository.findByUserId(userId).isEmpty()){
+            return false;
+        }
+        return true;
+    }
+
+    @Transactional
     public Develop save(DevelopDto developDto){
         return developRepository.save(developDto.toEntity());
     }
