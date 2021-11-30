@@ -30,8 +30,8 @@ public class UserService {
                 userRequestDto.getDepartment(),
                 userRequestDto.getPhoneNo(),
                 userRequestDto.getPassword(),
-                null,
-                null,
+                false,
+                false,
                 false,
                 userRequestDto.getPosition());
             userRepository.save(newUser); // 저장
