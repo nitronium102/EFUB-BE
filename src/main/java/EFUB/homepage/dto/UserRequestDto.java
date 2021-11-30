@@ -9,21 +9,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserRequestDto {
     private String name;
-    private Long studentId;
+    private Long student_id;
     private String department;
-    private String phoneNo;
+    private String phone_no;
     private String password;
     private Integer position;
 
     @Builder
     public UserRequestDto(User entity){
         this.name = entity.getName();
-        this.studentId = entity.getStudentId();
+        this.student_id = entity.getStudentId();
         this.department = entity.getDepartment();
-        this.phoneNo = entity.getPhoneNo();
+        this.phone_no = entity.getPhoneNo();
         this.password = entity.getPassword();
         this.position = entity.getPosition();
-
     }
 
 }

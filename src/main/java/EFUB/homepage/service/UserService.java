@@ -20,15 +20,15 @@ public class UserService {
     public UserResponseDto checkAndSaveUser(UserRequestDto userRequestDto) {
         User user = userRepository.findByNameAndPhoneNoAndPassword(
                 userRequestDto.getName(),
-                userRequestDto.getPhoneNo(),
+                userRequestDto.getPhone_no(),
                 userRequestDto.getPassword()
                 );
 
         if (user == null) { //기존에 저장되지 않은 유저
             User newUser = new User(userRequestDto.getName(),
-                userRequestDto.getStudentId(),
+                userRequestDto.getStudent_id(),
                 userRequestDto.getDepartment(),
-                userRequestDto.getPhoneNo(),
+                userRequestDto.getPhone_no(),
                 userRequestDto.getPassword(),
                 false,
                 false,

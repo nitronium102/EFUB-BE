@@ -14,10 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/recruitment/apply/user")
+    @PostMapping("/api/recruitment/apply/user")
     public UserResponseDto checkAndSaveUser(@RequestBody UserRequestDto userRequestDto){
         return userService.checkAndSaveUser(userRequestDto);
     }
-
 
 }
