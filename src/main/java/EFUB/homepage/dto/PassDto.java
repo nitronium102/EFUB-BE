@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 @Data
 public class PassDto {
 	private String name;
-	private String phoneNo;
+	private String phone_no;
 	private String password;
 
 	@Builder
-	public PassDto(String name, String phoneNo, String password) {
+	public PassDto(String name, String phone_no, String password) {
 		this.name = name;
-		this.phoneNo = phoneNo;
+		this.phone_no = phone_no;
 		this.password = password;
 	}
 }
