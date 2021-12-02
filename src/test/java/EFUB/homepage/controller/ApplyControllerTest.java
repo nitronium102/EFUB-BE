@@ -1,5 +1,6 @@
 package EFUB.homepage.controller;
 
+import EFUB.homepage.dto.SaveDesignDto;
 import EFUB.homepage.dto.SaveDevelopDto;
 import EFUB.homepage.dto.SaveInterviewDto;
 import EFUB.homepage.dto.SaveToolDto;
@@ -17,6 +18,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
@@ -46,8 +49,7 @@ class ApplyControllerTest {
                 .build();
     }
 
-    @Test
-    void 개발자_저장() throws Exception {
+    SaveDevelopDto createDevelop(){
         SaveToolDto tool1 = new SaveToolDto("Java");
         SaveToolDto tool2 = new SaveToolDto("SpringBoot");
         List<SaveToolDto> toolList = new ArrayList<>();
@@ -74,6 +76,37 @@ class ApplyControllerTest {
                 .interview(interviewList)
                 .build();
 
+        return newDevelop;
+    }
+
+    SaveDesignDto createDesign() {
+        SaveToolDto tool1 = new SaveToolDto("포토샵");
+        SaveToolDto tool2 = new SaveToolDto("일러스트레이터");
+        List<SaveToolDto> toolList = new ArrayList<>();
+        toolList.add(tool1);
+        toolList.add(tool2);
+
+        SaveDesignDto newDesign = SaveDesignDto.builder()
+                .user_id(Long.valueOf(101))
+                .motive("지원동기")
+                .confidence_des(4)
+                .tool(toolList)
+                .confidence_tool(3)
+                .project_topic("주제 테스트")
+                .exp_des("디자이너 협업")
+                .exp_dev("개발자 협업")
+                .link("http://")
+                .interview(true)
+                .orientation(true)
+                .build();
+
+        return newDesign;
+    }
+
+    @Test
+    void 개발자_저장() throws Exception {
+        SaveDevelopDto newDevelop = createDevelop();
+
         mvc.perform(MockMvcRequestBuilders.post("/api/recruitment/apply/save/dev")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(newDevelop)))
@@ -82,20 +115,25 @@ class ApplyControllerTest {
     }
 
     @Test
-    void 디자이너_저장() {
+    void 디자이너_저장() throws Exception {
+        SaveDesignDto newDesign = createDesign();
+
+        mvc.perform(MockMvcRequestBuilders.post("/api/recruitment/apply/save/des")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(newDesign)))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
     }
 
     @Test
-    void 개발자_업데이트() {
-    }
+    void 최종_저장() throws Exception {
+        SaveDevelopDto newDevelop = createDevelop();
 
-    @Test
-    void 디자이너_업데이트() {
-    }
-
-    @Test
-    void 최종저장() {
-
+        mvc.perform(MockMvcRequestBuilders.post("/api/recruitment/apply/save/dev")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(newDevelop))
+                .param("save_final", "true"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
 
