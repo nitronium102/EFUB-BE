@@ -1,4 +1,4 @@
-package EFUB.homepage.dto;
+package EFUB.homepage.dto.pass;
 
 import lombok.Builder;
 import lombok.Data;
@@ -6,11 +6,11 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class PassResponseDto {
+public class PassResDto {
 	private String result;
 
 	@Builder
-	public PassResponseDto(String result) {
+	public PassResDto(String result) {
 		this.result = result;
 	}
 }

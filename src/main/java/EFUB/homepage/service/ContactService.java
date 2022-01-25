@@ -1,8 +1,8 @@
 package EFUB.homepage.service;
 
 import EFUB.homepage.domain.Contact;
-import EFUB.homepage.dto.ContactDto;
-import EFUB.homepage.dto.MailDto;
+import EFUB.homepage.dto.contact.ContactDto;
+import EFUB.homepage.dto.contact.MailDto;
 import EFUB.homepage.repository.ContactRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -39,7 +39,6 @@ public class ContactService {
 
 	@Transactional
 	public Contact findByContactId(Long contactId) {
-		Contact contact = contactRepository.findByContactId(contactId);
-		return contact;
+		return contactRepository.findByContactId(contactId);
 	}
 }

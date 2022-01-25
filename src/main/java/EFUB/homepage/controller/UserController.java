@@ -1,8 +1,6 @@
 package EFUB.homepage.controller;
 
 
-import EFUB.homepage.dto.UserRequestDto;
-import EFUB.homepage.dto.UserResponseDto;
 import EFUB.homepage.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/api/recruitment/apply/user")
-    public UserResponseDto checkAndSaveUser(@RequestBody UserRequestDto userRequestDto){
-        return userService.checkAndSaveUser(userRequestDto);
-    }
+//    @PostMapping("/api/recruitment/apply/user")
+//    public UserResponseDto checkAndSaveUser(@RequestBody UserReqDto userReqDto){
+//        return userService.checkAndSaveUser(userReqDto);
+//    }
 
 }

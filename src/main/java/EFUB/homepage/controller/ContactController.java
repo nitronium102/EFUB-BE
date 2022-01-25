@@ -1,7 +1,7 @@
 package EFUB.homepage.controller;
 
-import EFUB.homepage.dto.ContactDto;
-import EFUB.homepage.dto.MailDto;
+import EFUB.homepage.dto.contact.ContactDto;
+import EFUB.homepage.dto.contact.MailDto;
 import EFUB.homepage.service.ContactService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class ContactController {
 
 	@PostMapping("/contact")
 	public ResponseEntity sendMail(@RequestBody ContactDto contactDto) {
-		String email = contactDto.getWriter_email();
+		String email = contactDto.getWriterEmail();
 		String title = "[EFUB 문의]";
 		String content = contactDto.getContent();
 
