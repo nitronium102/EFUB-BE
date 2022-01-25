@@ -1,18 +1,6 @@
 package EFUB.homepage.controller;
 
-import EFUB.homepage.domain.Design;
-import EFUB.homepage.domain.Develop;
-import EFUB.homepage.domain.Interview;
-import EFUB.homepage.domain.Tool;
-import EFUB.homepage.dto.*;
-import EFUB.homepage.service.*;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
+/*
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/recruitment/apply")
@@ -230,4 +218,6 @@ public class ApplyController {
 
         return ResponseEntity.ok().body(developService.getDevelop(uidDto.getUser_id()));
     }
+
 }
+*/

@@ -1,4 +1,4 @@
-package EFUB.homepage.dto;
+package EFUB.homepage.dto.pass;
 
 import lombok.Builder;
 import lombok.Data;
@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 @Data
 public class PassDto {
 	private String name;
-	private String phone_no;
+	private String phoneNo;
 	private String password;
 
 	@Builder
-	public PassDto(String name, String phone_no, String password) {
+	public PassDto(String name, String phoneNo, String password) {
 		this.name = name;
-		this.phone_no = phone_no;
+		this.phoneNo = phoneNo;
 		this.password = password;
 	}
 }

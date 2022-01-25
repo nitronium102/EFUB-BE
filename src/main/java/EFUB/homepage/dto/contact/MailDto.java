@@ -1,4 +1,4 @@
-package EFUB.homepage.dto;
+package EFUB.homepage.dto.contact;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
