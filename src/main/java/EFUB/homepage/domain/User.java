@@ -5,59 +5,57 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static javax.persistence.FetchType.LAZY;
 
 @Getter
 @NoArgsConstructor
-@Entity
-@Table(name = "User")
+@Entity(name = "users")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long userId;
 
-    @Column
-    private String name;
+	@Enumerated(EnumType.STRING)
+	private Position position;
 
-    @Column
-    private Long studentId;
+	private String name;
 
-    @Column
-    private String department;
+	private Long studentId;
 
-    @Column
-    private String phoneNo;
+	private String department;
 
-    @Column
-    private String password;
+	private String phoneNo;
 
-    @Column
-    private Boolean passMid;
+	private String password;
 
-    @Column
-    private Boolean passFinal;
+	@OneToOne(mappedBy = "user", fetch = LAZY)
+	private Develop developId;
 
-    @Column
-    private Boolean saveFinal;
+	@OneToOne(mappedBy = "user", fetch = LAZY)
+	private Design designId;
 
-    @Column
-    private Integer position;
+	private Boolean passFirst;
 
-    @Builder
-    public User(String name, Long studentId, String department, String phoneNo, String password,
-                Boolean passMid, Boolean passFinal, Boolean saveFinal, Integer position){
-        this.name = name;
-        this.studentId = studentId;
-        this.department = department;
-        this.phoneNo = phoneNo;
-        this.password = password;
-        this.passMid = passMid;
-        this.passFinal = passFinal;
-        this.saveFinal = saveFinal;
-        this.position = position;
-    }
+	private Boolean passFinal;
 
+	@OneToMany(mappedBy = "user")
+	List<Tool> tools = new ArrayList<Tool>();
 
-	public void saveFinal() {
-        this.saveFinal = true;
+	@OneToMany(mappedBy = "user")
+	List<Interview> interviews = new ArrayList<Interview>();
+
+	@Builder
+	public User(String name, Long studentId, String department, String phoneNo, String password,
+				Boolean passFirst, Boolean passFinal) {
+		this.name = name;
+		this.studentId = studentId;
+		this.department = department;
+		this.phoneNo = phoneNo;
+		this.password = password;
+		this.passFinal = passFinal;
+		this.passFirst = passFirst;
 	}
 }
