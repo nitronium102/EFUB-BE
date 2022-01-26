@@ -19,9 +19,10 @@ public abstract class Develop extends BaseTimeEntity {
 	@JoinColumn(name = "user_id")
 	protected User user;
 
-	@Column(length = 350)
+	@Column(length = 300)
 	protected String motive;
 
+	@Column(length = 100)
 	protected String projectTopic;
 
 	protected String applicationField;
