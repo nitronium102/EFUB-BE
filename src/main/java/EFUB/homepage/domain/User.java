@@ -13,7 +13,7 @@ import static javax.persistence.FetchType.LAZY;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity(name = "users")
+@Entity(name = "user")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,4 +66,6 @@ public class User {
 	public void setDevelop(Develop develop) {
 		this.develop = develop;
 	}
+
+	public void setDesign(Design design) { this.design = design;}
 }
