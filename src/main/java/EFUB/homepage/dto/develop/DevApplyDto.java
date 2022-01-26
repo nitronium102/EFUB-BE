@@ -15,5 +15,4 @@ public class DevApplyDto {
 	private String expSolve;
 	private String seminarTopic;
 	private String expStudy;
-	private String toolName;
 }
