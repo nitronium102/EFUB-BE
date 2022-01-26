@@ -1,51 +1,48 @@
 package EFUB.homepage.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
 public abstract class Develop extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false)
-	private Long developId;
+	protected Long developId;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
-	private User user;
+	protected User user;
 
 	@Column(length = 350)
-	private String motive;
+	protected String motive;
 
-	private String projectTopic;
+	protected String projectTopic;
 
-	private String applicationField;
+	protected String applicationField;
 
-	private String language;
+	protected String language;
 
-	private int confidenceLang;
+	protected Integer confidenceLang;
 
 	@Column(length = 1000)
-	private String link;
+	protected String link;
 
-	private Boolean orientation;
+	protected Boolean orientation;
 
-//	@Builder
-//	public Develop(User user, String motive, String projectTopic, String applicationField,
-//				   String language, int confidenceLang, String exp, String link, Boolean orientation) {
-//		this.user = user;
-//		this.motive = motive;
-//		this.projectTopic = projectTopic;
-//		this.applicationField = applicationField;
-//		this.language = language;
-//		this.confidenceLang = confidenceLang;
-//		this.link = link;
-//		this.orientation = orientation;
-//	}
+	public Develop(String motive, String projectTopic, String applicationField,
+		   String language, Integer confidenceLang, String link, Boolean orientation) {
+		this.motive = motive;
+		this.projectTopic = projectTopic;
+		this.applicationField = applicationField;
+		this.language = language;
+		this.confidenceLang = confidenceLang;
+		this.link = link;
+		this.orientation = orientation;
+	}
 }
