@@ -1,6 +1,8 @@
 package EFUB.homepage.domain;
 
+import EFUB.homepage.dto.design.DesApplyDto;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,40 +21,50 @@ public class Design extends BaseTimeEntity {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@Column(length = 350)
+	@Column(length = 300)
 	private String motive;
-
-	private int confidenceDes;
 
 	private int confidenceTool;
 
-	private String projectTopic;
+	@Column(length = 300)
+	private String activityPlan;
 
-	@Column(length = 5000)
-	private String expDev;
-
-	@Column(length = 5000)
-	private String expDes;
+	@Column(length = 300)
+	private String expSolve;
 
 	private String link;
 
-	private Boolean interview;
-
 	private Boolean orientation;
 
-//	@Builder
-//	public Design(User user, String motive, int confidenceDes, int confidenceTool, String projectTopic,
-//				  String expDes, String expDev, String link, Boolean interview, Boolean orientation) {
-//		this.user = user;
-//		this.motive = motive;
-//		this.confidenceDes = confidenceDes;
-//		this.confidenceTool = confidenceTool;
-//		this.projectTopic = projectTopic;
-//		this.expDes = expDes;
-//		this.expDev = expDev;
-//		this.link = link;
-//		this.interview = interview;
-//		this.orientation = orientation;
-//	}
+	@Builder
+	public Design(User user, String motive, int confidenceTool, String activityPlan,
+				  String expSolve, String link, Boolean orientation) {
+		this.user = user;
+		this.motive = motive;
+		this.confidenceTool = confidenceTool;
+		this.activityPlan = activityPlan;
+		this.expSolve = expSolve;
+		this.link = link;
+		this.orientation = orientation;
+	}
+
+	private void setUser(User user) {
+		this.user = user;
+		user.setDesign(this);
+	}
+
+	public static Design createDesign(User user, DesApplyDto apply) {
+		Design design = Design.builder()
+			.motive(apply.getMotive())
+			.confidenceTool(apply.getConfidenceTool())
+			.activityPlan(apply.getActivityPlan())
+			.expSolve(apply.getExpSolve())
+			.link(apply.getLink())
+			.orientation(apply.getOrientation())
+			.build();
+		design.setUser(user);
+
+		return design;
+	}
 }
 

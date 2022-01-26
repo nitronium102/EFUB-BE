@@ -10,10 +10,9 @@ public class DevApplyDto {
 	private String language;
 	private Integer confidenceLang;
 	private String link;
-	private Boolean orietation;
+	private Boolean orientation;
 	private String expProject;
 	private String expSolve;
 	private String seminarTopic;
 	private String expStudy;
-	private String toolName;
 }

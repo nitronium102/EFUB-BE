@@ -2,11 +2,9 @@ package EFUB.homepage.controller;
 
 import EFUB.homepage.domain.Position;
 import EFUB.homepage.domain.User;
+import EFUB.homepage.dto.design.DesReqDto;
 import EFUB.homepage.dto.develop.DevReqDto;
-import EFUB.homepage.service.DevelopService;
-import EFUB.homepage.service.InterviewService;
-import EFUB.homepage.service.ToolService;
-import EFUB.homepage.service.UserService;
+import EFUB.homepage.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ApplyController {
     private final UserService userService;
     private final ToolService toolService;
-//    private final DesignService designService;
+    private final DesignService designService;
     private final DevelopService developService;
     private final InterviewService interviewService;
 
@@ -40,6 +38,16 @@ public class ApplyController {
         return ResponseEntity.ok(200);
     }
 
+    @PostMapping("/design")
+    public ResponseEntity<Object> applyDesign(@RequestBody DesReqDto desReqDto){
+        User user = userService.save(desReqDto.getUser(), Position.Designer);
+
+        toolService.save(user, desReqDto.getTools());
+        interviewService.save(user, desReqDto.getInterviews());
+        designService.save(user, desReqDto.getApply());
+
+        return ResponseEntity.ok(200);
+    }
 /*
     @PostMapping("/get/des")
     public ResponseEntity<Object> getDesign(final @RequestBody UidDto uidDto) {
