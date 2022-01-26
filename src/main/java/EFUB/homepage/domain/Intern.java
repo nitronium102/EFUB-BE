@@ -47,7 +47,7 @@ public class Intern extends Develop {
 				.language(apply.getLanguage())
 				.confidenceLang(apply.getConfidenceLang())
 				.link(apply.getLink())
-				.orientation(apply.getOrietation())
+				.orientation(apply.getOrientation())
 				.expProject(apply.getExpProject())
 				.expStudy(apply.getExpStudy())
 				.toolName(apply.getToolName())
