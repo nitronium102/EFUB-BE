@@ -1,28 +1,19 @@
 package EFUB.homepage.service;
 
+import EFUB.homepage.domain.Interview;
+import EFUB.homepage.domain.User;
 import EFUB.homepage.repository.InterviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import java.util.List;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class InterviewService {
-    private final InterviewRepository interviewRepository;
+	public final InterviewRepository interviewRepository;
 
-//    @Transactional
-//    public Interview save(InterviewDto interviewDto){
-//        return interviewRepository.save(interviewDto.toEntity());
-//    }
-
-//    @Transactional
-//    public List<Interview> findByUserId(Long userId){
-//        return interviewRepository.findByUserId(userId);
-//    }
-
-    @Transactional
-    public void delete(Long interviewId){
-        interviewRepository.deleteById(interviewId);
-    }
+	public void save(User user, List<String> interviews) {
+		interviews.forEach(date -> interviewRepository.save(Interview.createInterview(user, date)));
+	}
 }

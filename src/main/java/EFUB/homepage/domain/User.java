@@ -1,5 +1,6 @@
 package EFUB.homepage.domain;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import java.util.List;
 import static javax.persistence.FetchType.LAZY;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name = "users")
 public class User {
 	@Id
@@ -23,7 +24,7 @@ public class User {
 
 	private String name;
 
-	private Long studentId;
+	private String studentId;
 
 	private String department;
 
@@ -32,13 +33,15 @@ public class User {
 	private String password;
 
 	@OneToOne(mappedBy = "user", fetch = LAZY)
-	private Develop developId;
+	private Develop develop;
 
 	@OneToOne(mappedBy = "user", fetch = LAZY)
-	private Design designId;
+	private Design design;
 
+	@Column(nullable = false, columnDefinition = "boolean default 0")
 	private Boolean passFirst;
 
+	@Column(nullable = false, columnDefinition = "boolean default 0")
 	private Boolean passFinal;
 
 	@OneToMany(mappedBy = "user")
@@ -48,14 +51,19 @@ public class User {
 	List<Interview> interviews = new ArrayList<Interview>();
 
 	@Builder
-	public User(String name, Long studentId, String department, String phoneNo, String password,
-				Boolean passFirst, Boolean passFinal) {
+	public User(String name, String studentId, String department, String phoneNo, String password,
+				Position position) {
 		this.name = name;
 		this.studentId = studentId;
 		this.department = department;
 		this.phoneNo = phoneNo;
 		this.password = password;
-		this.passFinal = passFinal;
-		this.passFirst = passFirst;
+		this.position = position;
+		this.passFirst = false;
+		this.passFinal = false;
+	}
+
+	public void setDevelop(Develop develop) {
+		this.develop = develop;
 	}
 }
