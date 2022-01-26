@@ -31,13 +31,12 @@ public abstract class Develop extends BaseTimeEntity {
 
 	protected Integer confidenceLang;
 
-	@Column(length = 1000)
 	protected String link;
 
 	protected Boolean orientation;
 
 	public Develop(String motive, String projectTopic, String applicationField,
-		   String language, Integer confidenceLang, String link, Boolean orientation) {
+				   String language, Integer confidenceLang, String link, Boolean orientation) {
 		this.motive = motive;
 		this.projectTopic = projectTopic;
 		this.applicationField = applicationField;
