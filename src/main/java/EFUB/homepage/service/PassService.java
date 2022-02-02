@@ -32,7 +32,7 @@ public class PassService {
 			return new PassResDto("비밀번호가 틀립니다.");
 		}
 
-		isPass = user.getPassFirst();
+		isPass = user.getPassMid();
 		if (isPass)
 			result = "합격";
 		else
