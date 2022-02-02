@@ -1,5 +1,6 @@
 package EFUB.homepage.domain;
 
+import EFUB.homepage.dto.common.UserResDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +14,7 @@ import static javax.persistence.FetchType.LAZY;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity(name = "user")
+@Entity
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +40,7 @@ public class User {
 	private Design design;
 
 	@Column(nullable = false, columnDefinition = "boolean default 0")
-	private Boolean passFirst;
+	private Boolean passMid;
 
 	@Column(nullable = false, columnDefinition = "boolean default 0")
 	private Boolean passFinal;
@@ -59,7 +60,7 @@ public class User {
 		this.phoneNo = phoneNo;
 		this.password = password;
 		this.position = position;
-		this.passFirst = false;
+		this.passMid = false;
 		this.passFinal = false;
 	}
 
@@ -68,4 +69,23 @@ public class User {
 	}
 
 	public void setDesign(Design design) { this.design = design;}
+
+	// temporary exist for test
+	public void setPassMid(Boolean passMid) {
+		this.passMid = passMid;
+	}
+
+	public UserResDto toUserResDto() {
+		return UserResDto.builder()
+				.department(department)
+				.name(name)
+				.passFinal(passFinal)
+				.passMid(passMid)
+				.phoneNo(phoneNo)
+				.userId(userId)
+				.position(position)
+				.studentId(studentId)
+				.build();
+	}
+
 }
