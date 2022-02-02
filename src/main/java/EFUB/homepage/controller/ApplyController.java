@@ -22,25 +22,38 @@ public class ApplyController {
     private final DevelopService developService;
     private final InterviewService interviewService;
 
-    static final String INVALID_REQUEST = "필수 파라미터 누락";
-    static final String SAVE_ERROR = "기존 정보가 존재함";
-    static final String UPDATE_ERROR = "기존 정보가 존재하지 않음";
 
-    @PostMapping("/develop")
+    @PostMapping("/develop/intern")
     // TODO: dto @Valid
-    public ResponseEntity<Object> applyDevelop(@RequestBody DevReqDto devReqDto) {
-        User user = userService.save(devReqDto.getUser(), Position.Developer);
+    public ResponseEntity<Object> applyDevelopIntern(@RequestBody DevReqDto devReqDto) {
+        if (applyDevelop(devReqDto, Position.DEVELOPER_INTERN))
+            return ResponseEntity.ok(200);
+        return ResponseEntity.internalServerError().build();
+    }
+
+    @PostMapping("/develop/lead")
+    // TODO: dto @Valid
+    public ResponseEntity<Object> applyDevelopLead(@RequestBody DevReqDto devReqDto) {
+        if (applyDevelop(devReqDto, Position.DEVELOPER_LEAD))
+            return ResponseEntity.ok(200);
+        return ResponseEntity.internalServerError().build();
+    }
+
+    private Boolean applyDevelop(DevReqDto devReqDto, Position developPosition) {
+        // TODO: @ControllerAdvice to error control
+        User user = userService.save(devReqDto.getUser(), developPosition);
 
         toolService.save(user, devReqDto.getTools());
         interviewService.save(user, devReqDto.getInterviews());
         developService.save(user, devReqDto.getApply());
 
-        return ResponseEntity.ok(200);
+        return true;
     }
+
 
     @PostMapping("/design")
     public ResponseEntity<Object> applyDesign(@RequestBody DesReqDto desReqDto){
-        User user = userService.save(desReqDto.getUser(), Position.Designer);
+        User user = userService.save(desReqDto.getUser(), Position.DESIGNER);
 
         toolService.save(user, desReqDto.getTools());
         interviewService.save(user, desReqDto.getInterviews());
