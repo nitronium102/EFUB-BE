@@ -1,4 +1,4 @@
-package EFUB.homepage.dto.common;
+package EFUB.homepage.dto.user;
 
 import EFUB.homepage.domain.Position;
 import EFUB.homepage.domain.User;
