@@ -1,6 +1,6 @@
 package EFUB.homepage.domain;
 
-import EFUB.homepage.dto.common.UserResDto;
+import EFUB.homepage.dto.user.UserResDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -68,11 +68,16 @@ public class User {
 		this.develop = develop;
 	}
 
-	public void setDesign(Design design) { this.design = design;}
+	public void setDesign(Design design) {
+		this.design = design;
+	}
 
-	// temporary exist for test
-	public void setPassMid(Boolean passMid) {
+	public void updatePassMid(Boolean passMid) {
 		this.passMid = passMid;
+	}
+
+	public void updatePassFinal(Boolean passFinal) {
+		this.passFinal = passFinal;
 	}
 
 	public UserResDto toUserResDto() {
