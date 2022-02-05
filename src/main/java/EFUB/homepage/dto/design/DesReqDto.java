@@ -1,6 +1,6 @@
 package EFUB.homepage.dto.design;
 
-import EFUB.homepage.dto.common.UserReqDto;
+import EFUB.homepage.dto.user.UserReqDto;
 import lombok.Builder;
 import lombok.Data;
 

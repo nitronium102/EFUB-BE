@@ -1,5 +1,5 @@
 package EFUB.homepage.domain;
 
 public enum Position {
-	Developer, Designer
+	DEVELOPER_INTERN, DEVELOPER_LEAD, DESIGNER
 }

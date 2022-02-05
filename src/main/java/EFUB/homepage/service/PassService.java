@@ -2,7 +2,7 @@ package EFUB.homepage.service;
 
 import EFUB.homepage.domain.User;
 import EFUB.homepage.dto.pass.PassDto;
-import EFUB.homepage.dto.pass.PassResDto;
+import EFUB.homepage.dto.pass.PassResultResDto;
 import EFUB.homepage.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import java.util.Objects;
 public class PassService {
 	private final UserRepository userRepository;
 
-	public PassResDto checkMidPass(PassDto passDto) {
+	public PassResultResDto checkMidPass(PassDto passDto) {
 
 		User user = userRepository.findByNameAndPhoneNo(
 			passDto.getName(),
@@ -26,22 +26,22 @@ public class PassService {
 		String result;
 
 		if (user == null) { // 등록된 유저가 없는 경우
-			return new PassResDto("잘못된 정보입니다.");
+			return new PassResultResDto("잘못된 정보입니다.");
 		}
 		if (!Objects.equals(user.getPassword(), passDto.getPassword())) {
-			return new PassResDto("비밀번호가 틀립니다.");
+			return new PassResultResDto("비밀번호가 틀립니다.");
 		}
 
-		isPass = user.getPassFirst();
+		isPass = user.getPassMid();
 		if (isPass)
 			result = "합격";
 		else
 			result = "불합격";
 
-		return new PassResDto(result);
+		return new PassResultResDto(result);
 	}
 
-	public PassResDto checkFinPass(PassDto passDto) {
+	public PassResultResDto checkFinPass(PassDto passDto) {
 
 		User user = userRepository.findByNameAndPhoneNo(
 			passDto.getName(),
@@ -52,10 +52,10 @@ public class PassService {
 		String result;
 
 		if (user == null) { // 등록된 유저가 없는 경우
-			return new PassResDto("잘못된 정보입니다.");
+			return new PassResultResDto("잘못된 정보입니다.");
 		}
 		if (!Objects.equals(user.getPassword(), passDto.getPassword())) {
-			return new PassResDto("비밀번호가 틀립니다.");
+			return new PassResultResDto("비밀번호가 틀립니다.");
 		}
 
 		isPass = user.getPassFinal();
@@ -64,6 +64,6 @@ public class PassService {
 		else
 			result = "불합격";
 
-		return new PassResDto(result);
+		return new PassResultResDto(result);
 	}
 }
