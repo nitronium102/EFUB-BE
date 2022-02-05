@@ -28,6 +28,15 @@ public class UserService {
 		return userRepository.save(user.toEntity(user, position));
 	}
 
+	public Boolean checkDuplicateUsers(UserReqDto userReqDto, Position position){
+		User user = userRepository.findByNameAndStudentIdAndPosition(
+			userReqDto.getName(),
+			userReqDto.getStudentId(),
+			position
+		);
+		return user!=null;
+	}
+
 	public PassResDto getUsers(String strOrder, String strPosition) {
 		List<User> users = getUserListByOrderAndPosition(strOrder, strPosition);
 		List<UserResDto> userResDtos = Collections.emptyList();
