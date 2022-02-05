@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findByNameAndStudentIdAndPosition(String name, String phoneNo, Position position);
+    User findByNameAndStudentIdAndPosition(String name, String studentId, Position position);
     User findByNameAndPhoneNo(String name, String phoneNo);
     List<User> findAllByPosition(Position position);
     List<User> findAllByPositionAndPassMid(Position position, Boolean order);
