@@ -19,11 +19,12 @@ public class ContactController {
 
 	@PostMapping("/contact")
 	public ResponseEntity<Object> sendMail(@RequestBody ContactDto contactDto) {
-		String email = contactDto.getWriterEmail();
-		String title = "[EFUB 문의]";
-		String content = contactDto.getContent();
+		MailDto mailDto = MailDto.builder()
+				.email(contactDto.getWriterEmail())
+				.title("[EFUB 문의]")
+				.content(contactDto.getContent())
+				.build();
 
-		MailDto mailDto = new MailDto(email, title, content);
 		contactService.mailSend(mailDto);
 		contactService.saveContact(contactDto);
 

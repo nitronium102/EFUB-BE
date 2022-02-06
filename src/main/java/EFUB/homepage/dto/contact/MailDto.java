@@ -1,5 +1,6 @@
 package EFUB.homepage.dto.contact;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ public class MailDto {
 	private String title;
 	private String content;
 
+	@Builder
 	public MailDto(String email, String title, String content) {
 		this.email = email;
 		this.title = title;
