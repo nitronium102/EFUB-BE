@@ -18,7 +18,7 @@ public class ContactController {
 	public final ContactService contactService;
 
 	@PostMapping("/contact")
-	public ResponseEntity sendMail(@RequestBody ContactDto contactDto) {
+	public ResponseEntity<Object> sendMail(@RequestBody ContactDto contactDto) {
 		String email = contactDto.getWriterEmail();
 		String title = "[EFUB 문의]";
 		String content = contactDto.getContent();
