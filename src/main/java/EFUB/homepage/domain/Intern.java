@@ -3,18 +3,21 @@ package EFUB.homepage.domain;
 import EFUB.homepage.dto.develop.DevApplyDto;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
+@Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("I")
 @Slf4j
 public class Intern extends Develop {
+	@OneToOne(mappedBy = "developIntern", fetch = FetchType.LAZY)
+	private User user;
+
 	@Column(length = 500)
 	private String expProject;
 
@@ -37,8 +40,8 @@ public class Intern extends Develop {
 	}
 
 	public void setUser(User user) {
-		super.user = user;
-		user.setDevelop(this);
+		this.user = user;
+		user.setIntern(this);
 	}
 
 	public static Intern createIntern(User user, DevApplyDto apply) {

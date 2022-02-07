@@ -15,9 +15,6 @@ public abstract class Develop extends BaseTimeEntity {
 	@Column(nullable = false)
 	protected Long developId;
 
-	@OneToOne(mappedBy = "develop", fetch = FetchType.LAZY)
-	protected User user;
-
 	@Column(length = 300)
 	protected String motive;
 
