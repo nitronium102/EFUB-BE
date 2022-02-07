@@ -15,8 +15,7 @@ public abstract class Develop extends BaseTimeEntity {
 	@Column(nullable = false)
 	protected Long developId;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
+	@OneToOne(mappedBy = "develop", fetch = FetchType.LAZY)
 	protected User user;
 
 	@Column(length = 300)

@@ -33,10 +33,12 @@ public class User {
 
 	private String password;
 
-	@OneToOne(mappedBy = "user", fetch = LAZY)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "develop_id")
 	private Develop develop;
 
-	@OneToOne(mappedBy = "user", fetch = LAZY)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "design_id")
 	private Design design;
 
 	@Column(nullable = false, columnDefinition = "boolean default 0")
@@ -81,6 +83,8 @@ public class User {
 	}
 
 	public UserResDto toUserResDto() {
+		String applicationUri = getApplicationUri();
+
 		return UserResDto.builder()
 				.department(department)
 				.name(name)
@@ -90,7 +94,23 @@ public class User {
 				.userId(userId)
 				.position(position)
 				.studentId(studentId)
+				.applicationUri(applicationUri)
 				.build();
+	}
+
+	private String getApplicationUri() {
+		String applicationUri = "";
+		switch (this.position) {
+			case DESIGNER:
+				applicationUri = "/api/admin/design/" + userId;
+				break;
+			case DEVELOPER_LEAD:
+				applicationUri = "/api/admin/lead/" + userId;
+				break;
+			case DEVELOPER_INTERN:
+				applicationUri = "/api/admin/intern/" + userId;
+		}
+		return applicationUri;
 	}
 
 }
