@@ -61,11 +61,10 @@ public class ApplyController {
 
         toolService.save(user, devReqDto.getTools());
         interviewService.save(user, devReqDto.getInterviews());
-        developService.save(user, devReqDto.getApply());
+        developService.save(user, devReqDto.getApply(), developPosition);
 
         return true;
     }
-
 
     @PostMapping("/submit/design")
     public ResponseEntity<Object> submitDesign(@RequestBody DesReqDto desReqDto){
@@ -77,27 +76,4 @@ public class ApplyController {
 
         return ResponseEntity.ok(200);
     }
-/*
-    @PostMapping("/get/des")
-    public ResponseEntity<Object> getDesign(final @RequestBody UidDto uidDto) {
-        if (uidDto == null || uidDto.getUser_id() == null)
-            return ResponseEntity.badRequest().body(INVALID_REQUEST);
-
-        if (userService.isSaveFinal(uidDto.getUser_id()))
-            return ResponseEntity.notFound().build();
-
-        return ResponseEntity.ok().body(designService.getDesign(uidDto.getUser_id()));
-    }
-
-    @PostMapping("/get/dev")
-    public ResponseEntity<Object> getDevelop(final @RequestBody UidDto uidDto) {
-        if (uidDto == null || uidDto.getUser_id() == null)
-            return ResponseEntity.badRequest().body(INVALID_REQUEST);
-
-        if (userService.isSaveFinal(uidDto.getUser_id()))
-            return ResponseEntity.notFound().build();
-
-        return ResponseEntity.ok().body(developService.getDevelop(uidDto.getUser_id()));
-    }
-*/
 }

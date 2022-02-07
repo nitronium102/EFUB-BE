@@ -39,6 +39,7 @@ public class UserService {
 
 	public PassResDto getUsers(String strOrder, String strPosition) {
 		List<User> users = getUserListByOrderAndPosition(strOrder, strPosition);
+		Position position = getPosition(strPosition);
 		List<UserResDto> userResDtos = Collections.emptyList();
 		if (!users.isEmpty())
 			userResDtos = users.stream().map(User::toUserResDto).collect(Collectors.toList());
