@@ -56,7 +56,6 @@ public class ApplyController {
     }
 
     private Boolean submitDevelop(DevReqDto devReqDto, Position developPosition) {
-        // TODO: @ControllerAdvice to error control
         User user = userService.save(devReqDto.getUser(), developPosition);
 
         toolService.save(user, devReqDto.getTools());
