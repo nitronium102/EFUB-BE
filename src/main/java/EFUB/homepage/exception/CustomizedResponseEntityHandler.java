@@ -23,4 +23,9 @@ public class CustomizedResponseEntityHandler extends ResponseEntityExceptionHand
 	public final ResponseEntity<Object> handleUserNotFoundException(NoSuchUserException e) {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 	}
+
+	@ExceptionHandler(SaveFailureException.class)
+	public final ResponseEntity<Object> handleSaveFailureException(SaveFailureException e) {
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+	}
 }
