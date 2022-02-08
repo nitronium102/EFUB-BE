@@ -3,7 +3,8 @@ package EFUB.homepage.controller;
 import EFUB.homepage.domain.Position;
 import EFUB.homepage.domain.User;
 import EFUB.homepage.dto.design.DesReqDto;
-import EFUB.homepage.dto.develop.DevReqDto;
+import EFUB.homepage.dto.develop.DevInternReqDto;
+import EFUB.homepage.dto.develop.DevLeadReqDto;
 import EFUB.homepage.dto.user.UserReqDto;
 import EFUB.homepage.exception.DuplicateUserException;
 import EFUB.homepage.service.*;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
+
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/recruitment/")
+@RequestMapping("/api/recruitment")
 public class ApplyController {
     private final UserService userService;
     private final ToolService toolService;
@@ -39,40 +42,26 @@ public class ApplyController {
         return ResponseEntity.ok(200);
     }
 
-    @PostMapping("/submit/develop/intern")
-    // TODO: dto @Valid
-    public ResponseEntity<Object> submitDevelopIntern(@RequestBody DevReqDto devReqDto) {
-        if (submitDevelop(devReqDto, Position.DEVELOPER_INTERN))
-            return ResponseEntity.ok(200);
-        return ResponseEntity.internalServerError().build();
-    }
+	@PostMapping("/submit/develop/intern")
+	public ResponseEntity<Object> submitDevelopIntern(@RequestBody DevInternReqDto devInternReqDto) {
+		Long userId = developService.submitIntern(devInternReqDto, Position.DEVELOPER_INTERN);
+		return ResponseEntity.created(URI.create("intern/" + userId.toString())).build();
+	}
 
-    @PostMapping("/submit/develop/lead")
-    // TODO: dto @Valid
-    public ResponseEntity<Object> submitDevelopLead(@RequestBody DevReqDto devReqDto) {
-        if (submitDevelop(devReqDto, Position.DEVELOPER_LEAD))
-            return ResponseEntity.ok(200);
-        return ResponseEntity.internalServerError().build();
-    }
+	@PostMapping("/submit/develop/lead")
+	public ResponseEntity<Object> submitDevelopLead(@RequestBody DevLeadReqDto devLeadReqDto) {
+		Long userId = developService.submitLead(devLeadReqDto, Position.DEVELOPER_LEAD);
+		return ResponseEntity.created(URI.create("lead/" + userId.toString())).build();
+	}
 
-    private Boolean submitDevelop(DevReqDto devReqDto, Position developPosition) {
-        User user = userService.save(devReqDto.getUser(), developPosition);
+	@PostMapping("/submit/design")
+	public ResponseEntity<Object> submitDesign(@RequestBody DesReqDto desReqDto) {
+		User user = userService.save(desReqDto.getUser(), Position.DESIGNER);
 
-        toolService.save(user, devReqDto.getTools());
-        interviewService.save(user, devReqDto.getInterviews());
-        developService.save(user, devReqDto.getApply(), developPosition);
+		toolService.save(user, desReqDto.getTools());
+		interviewService.save(user, desReqDto.getInterviews());
+		designService.save(user, desReqDto.getApply());
 
-        return true;
-    }
-
-    @PostMapping("/submit/design")
-    public ResponseEntity<Object> submitDesign(@RequestBody DesReqDto desReqDto){
-        User user = userService.save(desReqDto.getUser(), Position.DESIGNER);
-
-        toolService.save(user, desReqDto.getTools());
-        interviewService.save(user, desReqDto.getInterviews());
-        designService.save(user, desReqDto.getApply());
-
-        return ResponseEntity.ok(200);
-    }
+		return ResponseEntity.created(URI.create("design/" + user.getUserId().toString())).build();
+	}
 }
