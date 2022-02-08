@@ -1,6 +1,6 @@
 package EFUB.homepage.domain;
 
-import EFUB.homepage.dto.develop.DevApplyDto;
+import EFUB.homepage.dto.develop.DevInternApplyDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -44,7 +44,7 @@ public class Intern extends Develop {
 		user.setIntern(this);
 	}
 
-	public static Intern createIntern(User user, DevApplyDto apply) {
+	public static Intern createIntern(User user, DevInternApplyDto apply) {
 		Intern intern = Intern.builder()
 			.motive(apply.getMotive())
 			.projectTopic(apply.getProjectTopic())
