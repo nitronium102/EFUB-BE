@@ -3,16 +3,19 @@ package EFUB.homepage.domain;
 import EFUB.homepage.dto.develop.DevApplyDto;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
+@Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("L")
 public class Lead extends Develop {
+	@OneToOne(mappedBy = "developLead", fetch = FetchType.LAZY)
+	private User user;
+
 	@Column(length = 500)
 	private String expProject;
 
@@ -39,8 +42,8 @@ public class Lead extends Develop {
 	}
 
 	public void setUser(User user) {
-		super.user = user;
-		user.setDevelop(this);
+		this.user = user;
+		user.setLead(this);
 	}
 
 	public static Lead createLead(User user, DevApplyDto apply) {

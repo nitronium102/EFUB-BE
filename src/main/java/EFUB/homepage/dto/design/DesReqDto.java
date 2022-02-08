@@ -1,13 +1,13 @@
 package EFUB.homepage.dto.design;
 
 import EFUB.homepage.dto.user.UserReqDto;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Data
-@Builder
+@Getter
+@NoArgsConstructor
 public class DesReqDto {
 	private UserReqDto user;
 	private List<String> tools;

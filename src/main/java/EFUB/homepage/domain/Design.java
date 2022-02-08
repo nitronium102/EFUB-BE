@@ -17,8 +17,7 @@ public class Design extends BaseTimeEntity {
 	@Column(nullable = false)
 	private Long designId;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
+	@OneToOne(mappedBy = "design", fetch = FetchType.LAZY)
 	private User user;
 
 	@Column(length = 300)

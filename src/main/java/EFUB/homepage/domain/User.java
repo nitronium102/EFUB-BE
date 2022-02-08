@@ -10,8 +10,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static javax.persistence.FetchType.LAZY;
-
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -33,10 +31,16 @@ public class User {
 
 	private String password;
 
-	@OneToOne(mappedBy = "user", fetch = LAZY)
-	private Develop develop;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "intern_id")
+	private Intern developIntern;
 
-	@OneToOne(mappedBy = "user", fetch = LAZY)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "lead_id")
+	private Lead developLead;
+
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "design_id")
 	private Design design;
 
 	@Column(nullable = false, columnDefinition = "boolean default 0")
@@ -64,8 +68,24 @@ public class User {
 		this.passFinal = false;
 	}
 
-	public void setDevelop(Develop develop) {
-		this.develop = develop;
+	public static Position getPosition(String strPosition) {
+		switch (strPosition) {
+			case "intern":
+				return Position.DEVELOPER_INTERN;
+			case "lead":
+				return Position.DEVELOPER_LEAD;
+			case "design":
+			default:
+				return Position.DESIGNER;
+		}
+	}
+
+	public void setLead(Lead lead) {
+		this.developLead = lead;
+	}
+
+	public void setIntern(Intern intern) {
+		this.developIntern = intern;
 	}
 
 	public void setDesign(Design design) {
@@ -81,6 +101,8 @@ public class User {
 	}
 
 	public UserResDto toUserResDto() {
+		String applicationUri = getApplicationUri();
+
 		return UserResDto.builder()
 				.department(department)
 				.name(name)
@@ -90,7 +112,30 @@ public class User {
 				.userId(userId)
 				.position(position)
 				.studentId(studentId)
+				.applicationUri(applicationUri)
 				.build();
 	}
 
+	private String getApplicationUri() {
+		String applicationUri = "";
+		switch (this.position) {
+			case DESIGNER:
+				applicationUri = "/api/admin/application/design/" + userId;
+				break;
+			case DEVELOPER_LEAD:
+				applicationUri = "/api/admin/application/lead/" + userId;
+				break;
+			case DEVELOPER_INTERN:
+				applicationUri = "/api/admin/application/intern/" + userId;
+		}
+		return applicationUri;
+	}
+
+	public static String toToolResDto(Tool tool) {
+		return tool.getToolName();
+	}
+
+	public static String toInterviewResDto(Interview interview) {
+		return interview.getDate();
+	}
 }

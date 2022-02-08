@@ -15,4 +15,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findAllByPosition(Position position);
     List<User> findAllByPositionAndPassMid(Position position, Boolean order);
     Optional<User> findByUserIdAndPosition(Long userId, Position position);
+	Optional<User> findByUserIdAndPositionAndPassMid(Long userId, Position position, boolean b);
 }

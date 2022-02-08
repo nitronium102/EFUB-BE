@@ -1,16 +1,13 @@
 package EFUB.homepage.service;
 
-import EFUB.homepage.domain.Contact;
 import EFUB.homepage.dto.contact.ContactDto;
 import EFUB.homepage.dto.contact.MailDto;
 import EFUB.homepage.repository.ContactRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class ContactService {
 	private final ContactRepository contactRepository;
@@ -32,13 +29,7 @@ public class ContactService {
 		}
 	}
 
-	@Transactional
-	public Contact saveContact(ContactDto contactDto) {
-		return contactRepository.save(contactDto.toEntity());
-	}
-
-	@Transactional
-	public Contact findByContactId(Long contactId) {
-		return contactRepository.findByContactId(contactId);
+	public void saveContact(ContactDto contactDto) {
+		contactRepository.save(contactDto.toEntity());
 	}
 }
