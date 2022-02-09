@@ -8,9 +8,9 @@ import java.util.List;
 
 @NoArgsConstructor
 @Getter
-public class DevReqDto {
+public class DevInternReqDto {
 	private UserReqDto user;
 	private List<String> tools;
 	private List<String> interviews;
-	private DevApplyDto apply;
+	private DevInternApplyDto apply;
 }

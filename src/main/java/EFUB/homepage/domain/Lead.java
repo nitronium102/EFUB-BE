@@ -1,6 +1,6 @@
 package EFUB.homepage.domain;
 
-import EFUB.homepage.dto.develop.DevApplyDto;
+import EFUB.homepage.dto.develop.DevLeadApplyDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -46,7 +46,7 @@ public class Lead extends Develop {
 		user.setLead(this);
 	}
 
-	public static Lead createLead(User user, DevApplyDto apply) {
+	public static Lead createLead(User user, DevLeadApplyDto apply) {
 		Lead lead = Lead.builder()
 			.motive(apply.getMotive())
 			.projectTopic(apply.getProjectTopic())

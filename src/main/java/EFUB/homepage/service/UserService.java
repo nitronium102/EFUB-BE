@@ -10,15 +10,16 @@ import EFUB.homepage.dto.pass.PassMidUpdateInfo;
 import EFUB.homepage.dto.pass.PassResDto;
 import EFUB.homepage.dto.user.UserReqDto;
 import EFUB.homepage.dto.user.UserResDto;
+import EFUB.homepage.exception.NotPassMidException;
 import EFUB.homepage.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -72,16 +73,22 @@ public class UserService {
 	@Transactional
 	public void updatePassFinalInfo(String strPosition, List<PassFinalUpdateInfo> passFinalInfos) {
 		Position position = User.getPosition(strPosition);
+		List<Long> notPassMidUserIds = new ArrayList<>();
 		for (PassFinalUpdateInfo userPassInfo : passFinalInfos) {
 			Optional<User> optionalUser = userRepository
 					.findByUserIdAndPositionAndPassMid(userPassInfo.getUserId(), position, true);
-			optionalUser.orElseThrow(NoSuchElementException::new);
+			if (optionalUser.isEmpty()) {
+				notPassMidUserIds.add(userPassInfo.getUserId());
+				continue;
+			}
 			optionalUser.get().updatePassFinal(userPassInfo.getPassFinal());
 		}
+		if (!notPassMidUserIds.isEmpty())
+			throw new NotPassMidException(notPassMidUserIds);
 	}
 
 	public ApplyResDto getApplication(User user) {
-		Object application = null;
+		Object application;
 		switch (user.getPosition()) {
 			case DEVELOPER_INTERN:
 				application = getInternApplication(user);
