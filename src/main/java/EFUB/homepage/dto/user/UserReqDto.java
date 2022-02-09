@@ -4,13 +4,20 @@ import EFUB.homepage.domain.Position;
 import EFUB.homepage.domain.User;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+
 @Getter
 @NoArgsConstructor
 public class UserReqDto {
+	@NotBlank
 	private String name;
+	@NotBlank
 	private String studentId;
+	@NotBlank
 	private String department;
+	@NotBlank
 	private String phoneNo;
+	@NotBlank
 	private String password;
 
 	@Builder
