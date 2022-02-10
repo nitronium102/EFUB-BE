@@ -2,6 +2,7 @@ package EFUB.homepage.dto.develop;
 
 import lombok.Getter;
 
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -16,7 +17,7 @@ public class DevLeadApplyDto {
 	private String language;
 	private Integer confidenceLang;
 	private String link;
-	@NotNull
+	@AssertTrue @NotNull
 	private Boolean orientation;
 	@NotBlank
 	private String expProject;

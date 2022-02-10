@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RequiredArgsConstructor
@@ -43,19 +44,19 @@ public class ApplyController {
     }
 
 	@PostMapping("/submit/develop/intern")
-	public ResponseEntity<Object> submitDevelopIntern(@RequestBody DevInternReqDto devInternReqDto) {
+	public ResponseEntity<Object> submitDevelopIntern(@Valid @RequestBody DevInternReqDto devInternReqDto) {
 		Long userId = developService.submitIntern(devInternReqDto, Position.DEVELOPER_INTERN);
 		return ResponseEntity.created(URI.create("intern/" + userId.toString())).build();
 	}
 
 	@PostMapping("/submit/develop/lead")
-	public ResponseEntity<Object> submitDevelopLead(@RequestBody DevLeadReqDto devLeadReqDto) {
+	public ResponseEntity<Object> submitDevelopLead(@Valid @RequestBody DevLeadReqDto devLeadReqDto) {
 		Long userId = developService.submitLead(devLeadReqDto, Position.DEVELOPER_LEAD);
 		return ResponseEntity.created(URI.create("lead/" + userId.toString())).build();
 	}
 
 	@PostMapping("/submit/design")
-	public ResponseEntity<Object> submitDesign(@RequestBody DesReqDto desReqDto) {
+	public ResponseEntity<Object> submitDesign(@Valid @RequestBody DesReqDto desReqDto) {
 		User user = userService.save(desReqDto.getUser(), Position.DESIGNER);
 
 		toolService.save(user, desReqDto.getTools());

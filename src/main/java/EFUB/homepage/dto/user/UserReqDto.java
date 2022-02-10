@@ -5,13 +5,20 @@ import EFUB.homepage.domain.User;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.validation.constraints.NotBlank;
+
 @Getter
 @NoArgsConstructor
 public class UserReqDto {
+	@NotBlank
 	private String name;
+	@NotBlank
 	private String studentId;
+	@NotBlank
 	private String department;
+	@NotBlank
 	private String phoneNo;
+	@NotBlank
 	private String password;
 
 	@Builder

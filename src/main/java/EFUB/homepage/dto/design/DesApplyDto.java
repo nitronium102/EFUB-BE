@@ -2,6 +2,7 @@ package EFUB.homepage.dto.design;
 
 import lombok.Getter;
 
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -15,6 +16,6 @@ public class DesApplyDto {
 	@NotBlank
 	private String expSolve;
 	private String link;
-	@NotNull
+	@AssertTrue @NotNull
 	private Boolean orientation;
 }
