@@ -14,6 +14,7 @@ import EFUB.homepage.exception.NotPassMidException;
 import EFUB.homepage.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,9 +28,12 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class UserService {
+
 	private final UserRepository userRepository;
+	private final PasswordEncoder passwordEncoder;
 
 	public User save(UserReqDto user, Position position) {
+		user.encryptPassword(passwordEncoder);
 		return userRepository.save(user.toEntity(user, position));
 	}
 
