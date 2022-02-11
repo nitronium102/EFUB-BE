@@ -3,6 +3,7 @@ package EFUB.homepage.dto.user;
 import EFUB.homepage.domain.Position;
 import EFUB.homepage.domain.User;
 import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.constraints.NotBlank;
 
@@ -38,5 +39,9 @@ public class UserReqDto {
 				.department(user.getDepartment())
 				.position(position)
 				.build();
+	}
+
+	public void encryptPassword(PasswordEncoder passwordEncoder){
+		this.password = passwordEncoder.encode(password);
 	}
 }
