@@ -26,7 +26,7 @@ public class LoginController {
     @PostMapping("/login")
     public String login(@RequestBody LoginReqDto loginReqDto) {
         Admin member = service.findUser(loginReqDto);
-        if(member == null) throw new IllegalArgumentException("가입되지않은 이메일입니다");
+        if(member == null) throw new IllegalArgumentException("잘못된 아이디입니다.");
         if(!passwordEncoder.matches(loginReqDto.getPassword(), member.getPassword())) {
             throw new IllegalArgumentException("잘못된 비밀번호입니다.");
         }

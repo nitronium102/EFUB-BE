@@ -27,9 +27,8 @@ public class LoginService implements UserDetailsService {
     }
 
     @Transactional
-    public Admin findUser(LoginReqDto dto) {
-        Admin member = repository.findByAdminId(dto.getAdminId());
-        return member;
+    public Admin findUser(LoginReqDto loginReqDto) {
+        return repository.findByAdminId(loginReqDto.getAdminId());
     }
 
     @Override
