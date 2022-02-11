@@ -28,15 +28,15 @@ public class AdminController {
 	}
 
 	@PutMapping("/mid/{position}")
-	ResponseEntity<Object> udpatePassMid(@PathVariable("position") String position,
-									   @RequestBody List<PassMidUpdateInfo> passMidInfos) {
+	ResponseEntity<Object> updatePassMid(@PathVariable("position") String position,
+										 @RequestBody List<PassMidUpdateInfo> passMidInfos) {
 		userService.updatePassMidInfo(position, passMidInfos);
 		return ResponseEntity.ok().build();
 	}
 
 	@PutMapping("/final/{position}")
-	ResponseEntity<Object> udpatePassFinal(@PathVariable("position") String position,
-									   @RequestBody List<PassFinalUpdateInfo> passFinalInfos) {
+	ResponseEntity<Object> updatePassFinal(@PathVariable("position") String position,
+										   @RequestBody List<PassFinalUpdateInfo> passFinalInfos) {
 		userService.updatePassFinalInfo(position, passFinalInfos);
 		return ResponseEntity.ok().build();
 	}
