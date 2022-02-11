@@ -3,6 +3,7 @@ package EFUB.homepage.controller;
 import EFUB.homepage.config.JwtTokenProvider;
 import EFUB.homepage.domain.Admin;
 import EFUB.homepage.dto.login.LoginReqDto;
+import EFUB.homepage.exception.NoSuchAdminException;
 import EFUB.homepage.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,9 +27,9 @@ public class LoginController {
     @PostMapping("/login")
     public String login(@RequestBody LoginReqDto loginReqDto) {
         Admin member = service.findUser(loginReqDto);
-        if(member == null) throw new IllegalArgumentException("잘못된 아이디입니다.");
+        if(member == null) throw new NoSuchAdminException("잘못된 아이디입니다.");
         if(!passwordEncoder.matches(loginReqDto.getPassword(), member.getPassword())) {
-            throw new IllegalArgumentException("잘못된 비밀번호입니다.");
+            throw new NoSuchAdminException("잘못된 비밀번호입니다.");
         }
         return jwtTokenProvider.createToken(member.getAdminId(), member.getRole());
     }
