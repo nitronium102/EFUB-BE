@@ -4,10 +4,15 @@ import EFUB.homepage.domain.Contact;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 @NoArgsConstructor
 @Getter
 public class ContactDto {
+	@NotBlank
 	private String writerEmail;
+	@NotBlank
 	private String content;
 
 	public Contact toEntity() {

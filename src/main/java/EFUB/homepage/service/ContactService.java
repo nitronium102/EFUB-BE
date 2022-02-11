@@ -4,14 +4,18 @@ import EFUB.homepage.dto.contact.ContactDto;
 import EFUB.homepage.dto.contact.MailDto;
 import EFUB.homepage.repository.ContactRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
+@Component
 public class ContactService {
 	private final ContactRepository contactRepository;
 
+	@Autowired
 	private JavaMailSender mailSender;
 	private static final String TO_ADDRESS = "ewhaefub@gmail.com";
 

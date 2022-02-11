@@ -16,12 +16,17 @@ import java.util.Map;
 public class CustomizedResponseEntityHandler {
 
 	@ExceptionHandler(DuplicateUserException.class)
-	public final ResponseEntity<Object> handleDuplicatedUserException(Exception e) {
+	public final ResponseEntity<Object> handleDuplicatedUserException(DuplicateUserException e) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 	}
 
 	@ExceptionHandler(NoSuchUserException.class)
 	public final ResponseEntity<Object> handleUserNotFoundException(NoSuchUserException e) {
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+	}
+
+	@ExceptionHandler(NoSuchAdminException.class)
+	public final ResponseEntity<Object> handleNoSuchAdminException(NoSuchAdminException e) {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 	}
 
