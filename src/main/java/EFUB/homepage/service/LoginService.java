@@ -17,16 +17,6 @@ public class LoginService implements UserDetailsService {
     private final AdminRepository repository;
 
     @Transactional
-    public Long joinUser(LoginReqDto user) {
-        Admin newUser = Admin.builder()
-            .adminId(user.getAdminId())
-            .password(user.getPassword())
-            .build();
-        repository.save(newUser);
-        return newUser.getAdminNum();
-    }
-
-    @Transactional
     public Admin findUser(LoginReqDto loginReqDto) {
         return repository.findByAdminId(loginReqDto.getAdminId());
     }
