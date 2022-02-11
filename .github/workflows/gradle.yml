@@ -2,6 +2,8 @@ name: Spring Boot
 
 on:
   push:
+    branches: [ jueun ]
+  pull_request:
     branches: [ main ]
 
 jobs:
@@ -20,7 +22,7 @@ jobs:
         distribution: 'temurin'
     
     - name: decrypt secret file
-      run: ./decrypt-secret.sh
+      run: ./decrypt_secret.sh
       env:
         SECRET_PASSPHRASE: ${{ secrets.SECRET_PASSPHRASE }}
         
