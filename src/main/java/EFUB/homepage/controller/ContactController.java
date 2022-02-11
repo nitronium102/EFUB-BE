@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api")
@@ -19,7 +21,7 @@ public class ContactController {
 	public final ContactService contactService;
 
 	@PostMapping("/contact")
-	public ResponseEntity<Object> sendMail(@RequestBody ContactDto contactDto) {
+	public ResponseEntity<Object> sendMail(@Valid @RequestBody ContactDto contactDto) {
 		MailDto mailDto = MailDto.builder()
 				.email(contactDto.getWriterEmail())
 				.title("[EFUB 문의]")

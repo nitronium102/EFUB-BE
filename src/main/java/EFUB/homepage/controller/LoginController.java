@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api")
@@ -18,7 +20,7 @@ public class LoginController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginReqDto loginReqDto) {
+    public String login(@Valid @RequestBody LoginReqDto loginReqDto) {
         Admin member = service.findUser(loginReqDto);
         if(member == null) throw new NoSuchAdminException("잘못된 아이디입니다.");
         if(!passwordEncoder.matches(loginReqDto.getPassword(), member.getPassword())) {
