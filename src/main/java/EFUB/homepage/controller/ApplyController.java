@@ -32,14 +32,14 @@ public class ApplyController {
     @PostMapping("/apply/develop")
     public ResponseEntity<Object> applyDevelop(@RequestBody UserReqDto userReqDto){
         if (userService.checkDuplicateUsers(userReqDto, Position.DEVELOPER_LEAD) || userService.checkDuplicateUsers(userReqDto, Position.DEVELOPER_INTERN))
-            throw new DuplicateUserException("이미 지원하셨습니다");
+            throw new DuplicateUserException();
         return ResponseEntity.ok(200);
     }
 
     @PostMapping("/apply/design")
     public ResponseEntity<Object> applyDesign(@RequestBody UserReqDto userReqDto){
         if (userService.checkDuplicateUsers(userReqDto, Position.DESIGNER))
-            throw new DuplicateUserException("이미 지원하셨습니다");
+            throw new DuplicateUserException();
         return ResponseEntity.ok(200);
     }
 
