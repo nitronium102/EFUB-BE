@@ -1,11 +1,11 @@
 package EFUB.homepage.dto.pass;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @NoArgsConstructor
-@Data
 public class PassResultResDto {
 	private String result;
 

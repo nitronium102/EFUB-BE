@@ -7,9 +7,13 @@ import EFUB.homepage.exception.NoSuchAdminException;
 import EFUB.homepage.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -21,11 +25,12 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(@Valid @RequestBody LoginReqDto loginReqDto) {
-        Admin member = service.findUser(loginReqDto);
-        if(member == null) throw new NoSuchAdminException("잘못된 아이디입니다.");
-        if(!passwordEncoder.matches(loginReqDto.getPassword(), member.getPassword())) {
+        Optional<Admin> optionalAdmin = service.findUser(loginReqDto);
+        if(optionalAdmin.isEmpty()) throw new NoSuchAdminException("잘못된 아이디입니다.");
+        Admin admin = optionalAdmin.get();
+        if(!passwordEncoder.matches(loginReqDto.getPassword(), admin.getPassword())) {
             throw new NoSuchAdminException("잘못된 비밀번호입니다.");
         }
-        return jwtTokenProvider.createToken(member.getAdminId(), member.getRole());
+        return jwtTokenProvider.createToken(admin.getAdminId(), admin.getRole());
     }
 }
