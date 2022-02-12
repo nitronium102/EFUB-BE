@@ -1,5 +1,6 @@
 package EFUB.homepage.domain;
 
+import EFUB.homepage.config.AdminDetail;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,6 @@ import javax.persistence.*;
 @Getter
 @Entity
 @NoArgsConstructor
-@Table(name="admin")
 public class Admin {
 
     @Id
@@ -30,5 +30,13 @@ public class Admin {
         this.adminId = adminId;
         this.password =password;
         role = "ADMIN";
+    }
+
+    public AdminDetail toAdminDetail() {
+        return AdminDetail.builder()
+                .adminId(adminId)
+                .auth(role)
+                .password(password)
+                .build();
     }
 }

@@ -1,6 +1,7 @@
 package EFUB.homepage.config;
 
-import EFUB.homepage.domain.Admin;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,15 +9,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
+@NoArgsConstructor
 public class AdminDetail implements UserDetails {
     private String adminId;
     private String password;
     private String auth;
 
-    public AdminDetail(Admin admin) {
-        this.adminId = admin.getAdminId();
-        this.password = admin.getPassword();
-        this.auth = "ROLE_" + admin.getRole();
+    @Builder
+    public AdminDetail(String adminId, String password, String auth) {
+        this.adminId = adminId;
+        this.password = password;
+        this.auth = "ROLE_" + auth;
     }
 
     @Override
