@@ -29,15 +29,15 @@ public class ApplyController {
     private final InterviewService interviewService;
 
 
-    @PostMapping("/apply/develop")
-    public ResponseEntity<Object> applyDevelop(@RequestBody UserReqDto userReqDto){
+    @PostMapping("/check/develop")
+    public ResponseEntity<Object> checkDevelop(@RequestBody UserReqDto userReqDto){
         if (userService.checkDuplicateUsers(userReqDto, Position.DEVELOPER_LEAD) || userService.checkDuplicateUsers(userReqDto, Position.DEVELOPER_INTERN))
             throw new DuplicateUserException();
         return ResponseEntity.ok(200);
     }
 
-    @PostMapping("/apply/design")
-    public ResponseEntity<Object> applyDesign(@RequestBody UserReqDto userReqDto){
+    @PostMapping("/check/design")
+    public ResponseEntity<Object> checkDesign(@RequestBody UserReqDto userReqDto){
         if (userService.checkDuplicateUsers(userReqDto, Position.DESIGNER))
             throw new DuplicateUserException();
         return ResponseEntity.ok(200);
