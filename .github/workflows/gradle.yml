@@ -4,6 +4,10 @@ on:
   push:
     branches: [ main ]
 
+env: 
+  CODE_DEPLOY_APP_NAME: efub-api-deploy
+  DEPLOYMENT_GROUP_NAME: efub-api-deploy
+  
 jobs:
   build:
 
@@ -11,7 +15,7 @@ jobs:
 
     steps:
     - name: checkout
-      uses: actions/checkout@v2 # 현재 상태의 소스코드를 가상의 컨테이너 안으로 checkout
+      uses: actions/checkout@v2
     
     - name: Set up JDK 11
       uses: actions/setup-java@v2
@@ -43,3 +47,15 @@ jobs:
         docker build -t $REPO .
         docker tag $REPO:latest $NAME/$REPO:latest
         docker push $NAME/$REPO:latest
+        
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-northeast-2
+
+    - name: Code Deploy
+      run: aws deploy create-deployment --application-name $CODE_DEPLOY_APP_NAME --deployment-config-name CodeDeployDefault.OneAtATime --deployment-group-name $DEPLOYMENT_GROUP_NAME 
+  
+
