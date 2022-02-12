@@ -9,7 +9,6 @@ import javax.validation.constraints.NotBlank;
 
 @NoArgsConstructor
 @Getter
-@Setter
 public class LoginReqDto {
 
     @NotBlank
