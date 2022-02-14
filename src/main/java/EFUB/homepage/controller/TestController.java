@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TestController {
-	@GetMapping("/hello")
+	@GetMapping("/")
 	public String serverTest() {
-		return "efub❤️💛💚‍️\nServer is working now!❤️‍🔥";
+		return "EFUB Server is working now!❤️‍🔥";
 	}
 }
