@@ -37,3 +37,5 @@ out/
 .vscode/
 
 application-datasource.properties
+
+/src/main/resources/application.properties
