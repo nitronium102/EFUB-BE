@@ -14,8 +14,8 @@ public class CORSConfig {
 		CorsConfiguration config = new CorsConfiguration();
 		config.setAllowCredentials(true);
 		config.addAllowedOrigin("http://localhost:3000/");
-		config.addAllowedOrigin("http://www.efub.co.kr/");
-		config.addAllowedOrigin("http://efub.co.kr/");
+		config.addAllowedOrigin("https://www.efub.co.kr/");
+		config.addAllowedOrigin("https://efub.co.kr/");
 		config.addAllowedHeader("*");
 		config.addAllowedMethod("*");
 		config.setMaxAge(3600L);
