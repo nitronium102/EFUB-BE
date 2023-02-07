@@ -18,7 +18,7 @@ public abstract class Develop extends BaseTimeEntity {
 	@Column(length = 300)
 	protected String motive;
 
-	@Column(length = 100)
+	@Column(length = 500)
 	protected String projectTopic;
 
 	protected String applicationField;
